@@ -9,14 +9,14 @@ class Users::SessionsController < Devise::SessionsController
   # end
 
   # POST /resource/sign_in
-  # def create
-  #   super
-  # end
+  def create
+    super
+  end
 
   # DELETE /resource/sign_out
-  # def destroy
-  #   super
-  # end
+  def destroy
+    super
+  end
 
   # protected
 
@@ -24,4 +24,14 @@ class Users::SessionsController < Devise::SessionsController
   # def configure_sign_in_params
   #   devise_parameter_sanitizer.permit(:sign_in, keys: [:attribute])
   # end
+  #
+  def after_sign_in_path_for(_resource)
+    flash[:notice] = 'サインインに成功しました。'
+    tweets_path
+  end
+
+  def after_sign_out_path_for(_resource)
+    flash[:notice] = 'サインアウトに成功しました。'
+    new_user_session_path
+  end
 end

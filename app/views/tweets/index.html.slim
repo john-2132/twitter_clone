@@ -1,0 +1,18 @@
+div.row.h-100
+  div.col-3.bg-black.text-white
+    div.fixed-bottom.ms-7
+      div.w-14em
+        button.btn.btn-dark.btn-lg.rounded-5.mb-08em.w-100.dropdown-toggle type="button" data-bs-toggle="dropdown" aria-expanded="false"
+          = @user.name
+          i.bi.bi-three-dots.float-end
+        ul.dropdown-menu.dropdown-menu-dark.text-center.w-inherit
+          li
+            = link_to "#{@user.name}からログアウト", destroy_user_session_path, method: :delete, data: { turbo_method: 'delete' }, class: 'dropdown-item'
+          
+  div.col-5.bg-black.border.border-dark.text-white
+    div.row.border.border-dark
+      div
+        button.btn.btn-tweet.rounded-5.w-25.float-end ポストする
+  div.col-4.bg-black.text-white
+    プロモーション
+      

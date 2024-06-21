@@ -1,2 +1,8 @@
 @import 'bootstrap/scss/bootstrap';
 @import 'bootstrap-icons/font/bootstrap-icons';
+@import './override/autocomplete.scss';
+@import './override/flash.scss';
+@import './override/dropdown.scss';
+@import './custom/width.scss';
+@import './custom/margin.scss';
+@import './custom/button.scss';

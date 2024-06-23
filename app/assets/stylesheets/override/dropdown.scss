@@ -1,0 +1,4 @@
+// dropdownの ▼ を非表示にする
+.dropdown-toggle::after {
+  display: none;
+}

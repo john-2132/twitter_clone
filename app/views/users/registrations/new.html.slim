@@ -1,0 +1,34 @@
+
+= render "users/shared/error_messages", resource: resource
+div.bg-dark.h-100
+  div.card.w-40.bg-black.text-white.position-relative.top-50.start-50.translate-middle.pb-3.rounded-4.overflow-scroll.h-70
+    div.card-header.text-center.fs-2 Twitter
+    div.card-body
+      div.mx-5
+        h2.mb-3 アカウント作成
+        = form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f|
+          .field.form-floating.mb-3
+            = f.text_field :name, autofocus: true, autocomplete: "name", class: 'form-control bg-black text-white'
+            = f.label :name, class: 'text-light'
+          .field.form-floating.mb-3
+            = f.email_field :email, autofocus: true, autocomplete: "email", class: 'form-control bg-black text-white'
+            = f.label :email, class: 'text-light'
+          .field.form-floating.mb-3
+            = f.telephone_field :phone_number, autocomplete: "phone-number", class: 'form-control bg-black text-white'
+            = f.label :phone_number, class: 'text-light'
+          .field.mb-3
+            = f.label :birth_date, class: 'mb-2'
+            br/
+            = raw sprintf(f.date_select( :birth_date, {use_month_numbers: true, start_year: 1930, end_year: Time.now.year, include_blank: true, date_separator: '%s'}, {:class => 'bg-black text-light'}), '年 ', '月 ',) + '日' 
+          .field.form-floating.mb-3
+            = f.password_field :password, autocomplete: "new-password", class: 'form-control bg-black text-white'
+            = f.label :password, class: 'text-light'
+            - if @minimum_password_length
+              em
+                | (#{@minimum_password_length} characters minimum)
+          .field.form-floating.mb-5
+            = f.password_field :password_confirmation, autocomplete: "new-password", class: 'form-control bg-black text-white'
+            = f.label :password_confirmation, class: 'text-light'
+          .actions
+            = f.submit "Sign up", class: 'btn btn-lg btn-secondary w-100 rounded-5'
+        / = render "users/shared/links"

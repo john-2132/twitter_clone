@@ -1,17 +1,52 @@
-div.row.h-100
-  div.col-3.bg-black.text-white
-    div.fixed-bottom.ms-7
+div.row.h-remain.gx-0
+  div.col-35.bg-black.text-white
+    div.d-flex.align-items-start.flex-column.ms-9.h-remain.overflow-scroll.card.rounded-0.bg-black
+      div.my-4.h4
+        = link_to '#', class: 'text-decoration-none text-white'
+          i.bi.bi-house-fill
+            span.ms-3.fst-normal ホーム
+      div.mb-4.h4
+        = link_to '#', class: 'text-decoration-none mb-2 text-white'
+          i.bi.bi-hash
+            span.ms-3.fst-normal 話題を検索
+      div.mb-4.h4
+        = link_to '#', class: 'text-decoration-none mb-2 text-white'
+          i.bi.bi-bell
+            span.ms-3.fst-normal 通知
+      div.mb-4.h4
+        = link_to '#', class: 'text-decoration-none mb-2 text-white'
+          i.bi.bi-envelope
+            span.ms-3.fst-normal メッセージ
+      div.mb-4.h4
+        = link_to '#', class: 'text-decoration-none mb-2 text-white'
+          i.bi.bi-bookmark
+            span.ms-3.fst-normal ブックマーク
+      div.mb-4.h4
+        = link_to '#', class: 'text-decoration-none mb-2 text-white'
+          i.bi.bi-ticket
+            span.ms-3.fst-normal Twitter Blue
+      div.mb-4.h4
+        = link_to '#', class: 'text-decoration-none mb-2 text-white'
+          i.bi.bi-person
+            span.ms-3.fst-normal プロフィール
+      div.mb-auto.h4
+        = link_to '#', class: 'text-decoration-none mb-auto text-white'
+          i.bi.bi-three-dots
+            span.ms-3.fst-normal もっと見る
       div.w-14em
-        button.btn.btn-dark.btn-lg.rounded-5.mb-08em.w-100.dropdown-toggle type="button" data-bs-toggle="dropdown" aria-expanded="false"
+        button.btn.btn-dark.btn-lg.rounded-5.w-100.dropdown-toggle type="button" data-bs-toggle="dropdown" aria-expanded="false"
           = @user.name
           i.bi.bi-three-dots.float-end
         ul.dropdown-menu.dropdown-menu-dark.text-center.w-inherit
           li
             = link_to "#{@user.name}からログアウト", destroy_user_session_path, method: :delete, data: { turbo_method: 'delete' }, class: 'dropdown-item'
           
-  div.col-5.bg-black.border.border-dark.text-white
-    div.row.border.border-dark
-      div
+  div.col-45.bg-black.border.border-dark.text-white.border-top-0
+    = form_with url: "#", local: true do |f|
+      .form-group
+        = f.text_area :tweet, class: 'form-control bg-black text-white border-0 rounded-0 align-content-center fs-5', placeholder: 'いまどうしてる？'
+    div.row.border-bottom.border-dark
+      div.py-2
         button.btn.btn-tweet.rounded-5.w-25.float-end ポストする
   div.col-4.bg-black.text-white
     プロモーション

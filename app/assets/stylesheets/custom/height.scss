@@ -1,3 +1,11 @@
 .h-70 {
-  height: 80%;
+  height: 70% !important;
+}
+
+.h-header {
+  height: 2em !important;
+}
+
+.h-remain {
+  height: calc(100% - 2em) !important;
 }

@@ -36,7 +36,7 @@ div.row.h-remain.gx-0
       div.w-17em.mb-3
         button.btn.btn-black.btn-lg.rounded-5.w-100.dropdown-toggle.d-flex.align-items-center.justify-content-between.user_icon.border-0 type="button" data-bs-toggle="dropdown" aria-expanded="false"
           div.d-flex.align-items-center
-            = image_tag @user.avatar.variant(resize: '40x40!', gravity: :center), alt: @user.avatar.filename.to_s, class: 'rounded-circle' if @user.avatar.attached?
+            = image_tag @user.avatar.variant(resize: '45x45!', gravity: :center), alt: @user.avatar.filename.to_s, class: 'rounded-circle' if @user.avatar.attached?
             span.ps-2.text-white
               = @user.name
           i.bi.bi-three-dots.ms-auto.text-white
@@ -47,12 +47,19 @@ div.row.h-remain.gx-0
 
           
   div.col-45.bg-black.border.border-dark.text-white.border-top-0
-    = form_with url: "#", local: true do |f|
-      .form-group
-        = f.text_area :tweet, class: 'form-control bg-black text-white border-0 rounded-0 align-content-center fs-5', placeholder: 'いまどうしてる？'
-    div.row.border-bottom.border-dark
-      div.py-2
-        button.btn.btn-tweet.rounded-5.w-25.float-end ポストする
+    div.row.row-cols-2.gx-0.border-bottom.border-dark
+      div.col-15.align-self-center.text-center
+        = image_tag @user.avatar.variant(resize: '45x45!', gravity: :center), alt: @user.avatar.filename.to_s, class: 'rounded-circle' if @user.avatar.attached?
+      div.col-105
+        = form_with url: "#", local: true do |f|
+          .form-group
+            = f.text_area :tweet, class: 'form-control bg-black text-white border-0 rounded-0 align-content-center fs-5 ps-0', placeholder: 'いまどうしてる？'
+      div.col-15
+      div.col-105
+        div.d-flex.align-items-center.justify-content-between
+          = link_to '#', class: 'text-decoration-none'
+            i.bi.bi-image
+          button.btn.btn-tweet.rounded-5.w-25.mx-2.my-2 ポストする
   div.col-4.bg-black.text-white
     プロモーション
       

@@ -11,9 +11,9 @@ html.h-100
   body.h-100
     - flash.each do |type, message|
       = content_tag(:div, message, class: "alert alert-#{type == 'notice' ? 'success' : 'danger'}")
-    div class="#{user_signed_in? ? 'bg-black border-dark' : 'bg-dark border-secondary'} row gx-0"
+    div class="#{user_signed_in? ? 'bg-black border-dark' : 'bg-dark border-secondary'} row gx-0 h-header"
       div.col-35.text-white.rounded-0.my-auto
-        h3 class="mb-0 d-flex h-header align-items-center ms-9"
+        h3 class="mb-0 d-flex align-items-center ms-9"
           = link_to tweets_path, class: "text-decoration-none text-white"
             i class="bi bi-twitter"
               span.ms-2.fst-normal Twitter

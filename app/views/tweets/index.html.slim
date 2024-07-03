@@ -1,6 +1,6 @@
 div.row.h-remain.gx-0
-  div.col-35.bg-black.text-white
-    div.d-flex.align-items-start.flex-column.ms-9.h-remain.overflow-scroll.card.rounded-0.bg-black
+  div.col-35.bg-black.text-white.overflow-scroll.card.h-100.rounded-0
+    div.d-flex.align-items-start.flex-column.ms-9.bg-black.h-100
       div.my-4.h4
         = link_to '#', class: 'text-decoration-none text-white'
           i.bi.bi-house-fill
@@ -33,13 +33,18 @@ div.row.h-remain.gx-0
         = link_to '#', class: 'text-decoration-none mb-auto text-white'
           i.bi.bi-three-dots
             span.ms-3.fst-normal もっと見る
-      div.w-14em
-        button.btn.btn-dark.btn-lg.rounded-5.w-100.dropdown-toggle type="button" data-bs-toggle="dropdown" aria-expanded="false"
-          = @user.name
-          i.bi.bi-three-dots.float-end
-        ul.dropdown-menu.dropdown-menu-dark.text-center.w-inherit
+      div.w-17em.mb-3
+        button.btn.btn-black.btn-lg.rounded-5.w-100.dropdown-toggle.d-flex.align-items-center.justify-content-between.user_icon.border-0 type="button" data-bs-toggle="dropdown" aria-expanded="false"
+          div.d-flex.align-items-center
+            = image_tag @user.avatar.variant(resize: '40x40!', gravity: :center), alt: @user.avatar.filename.to_s, class: 'rounded-circle' if @user.avatar.attached?
+            span.ps-2.text-white
+              = @user.name
+          i.bi.bi-three-dots.ms-auto.text-white
+
+        ul.dropdown-menu.dropdown-menu-black.text-center.w-inherit.border-dark.shadow-lg
           li
             = link_to "#{@user.name}からログアウト", destroy_user_session_path, method: :delete, data: { turbo_method: 'delete' }, class: 'dropdown-item'
+
           
   div.col-45.bg-black.border.border-dark.text-white.border-top-0
     = form_with url: "#", local: true do |f|

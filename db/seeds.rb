@@ -13,7 +13,9 @@ user = User.new(
   email: 'zumiairhc@gmail.com',
   password: ENV['CONFIRMED_USER_PASS'],
   birth_date: '1992-02-11',
-  phone_number: '090-1111-2222'
+  phone_number: '090-1111-2222',
+  avatar: ActiveStorage::Blob.create_and_upload!(io: File.open(Rails.root.join('app/assets/images/cat.jpg')),
+                                                 filename: '小松寺の猫')
 )
 
 user.skip_confirmation!

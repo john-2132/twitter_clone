@@ -8,10 +8,8 @@ html.h-100
     = csp_meta_tag
     = stylesheet_link_tag "application", "data-turbo-track": "reload"
     = javascript_include_tag "application", "data-turbo-track": "reload", defer: true
-  body.h-100
-    - flash.each do |type, message|
-      = content_tag(:div, message, class: "alert alert-#{type == 'notice' ? 'success' : 'danger'}")
-    div class="#{user_signed_in? ? 'bg-black border-dark' : 'bg-dark border-secondary'} row gx-0 h-header"
+  body.h-100.overscroll-none
+    div class="#{user_signed_in? ? 'bg-black border-dark' : 'bg-dark border-secondary'} row gx-0 h-header position-fixed w-100 top-0 z-4" id="header"
       div.col-35.text-white.rounded-0.my-auto
         h3 class="mb-0 d-flex align-items-center ms-9"
           = link_to tweets_path, class: "text-decoration-none text-white"
@@ -19,11 +17,12 @@ html.h-100
               span.ms-2.fst-normal Twitter
       div.col-45.border.border-dark.text-white.border-top-0
         - if user_signed_in?
-          .row.gx-0.h-100
-            = link_to '#', class: 'col btn btn-black text-white align-content-center tweet_type rounded-0'
+          .d-flex.justify-content-space-around.h-100
+            = link_to tweets_path, id: 'recommendBtn', class: 'w-50 btn btn-black text-white align-content-center tweet-type rounded-0 selected', data: { turbo_frame: "tweets", turbo_action: :replace }
               span.fst-normal おすすめ
-            = link_to '#', class: 'col btn btn-black text-white align-content-center tweet_type rounded-0'
+            = link_to tweets_folllow_path, id: 'followingBtn', class: 'w-50 btn btn-black text-white align-content-center tweet-type rounded-0', data: { turbo_frame: "tweets", turbo_action: :replace }
               span.fst-normal フォロー中
+            .underline
       div.col-4.text-white.my-auto
         div.float-end
           - if user_signed_in?
@@ -31,5 +30,29 @@ html.h-100
           - else
             = link_to "ログイン", new_user_session_path, class: 'btn btn-outline-primary me-3'
           = link_to "新規登録", new_user_registration_path, class: 'btn btn-primary me-9'
-      
     = yield
+    #toast-container(data-controller="toast" class="position-fixed top-header-bottom end-0")
+      - flash.each do |type, message|
+        .mb-2.toast(class="toast" role="alert" aria-live="assertive" aria-atomic="true")
+          .toast-header class="text-#{type == 'notice' ? 'bg-success' : 'bg-danger'}"
+            strong.me-auto
+              = type.to_s.capitalize
+            button.btn-close(data-bs-dismiss="toast")
+          .toast-body
+            = message
+      - if defined?(resource)
+        - if resource.errors.any?
+          .mb-2.toast(class="toast" role="alert" aria-live="assertive" aria-atomic="true")
+            .toast-header
+              strong.me-auto
+                = I18n.t("errors.messages.not_saved",
+                  count: resource.errors.count,
+                  resource: resource.class.model_name.human.downcase)
+              button.btn-close(data-bs-dismiss="toast")
+            .toast-body
+              ul
+                - resource.errors.full_messages.each do |message|
+                  li= message
+
+
+  

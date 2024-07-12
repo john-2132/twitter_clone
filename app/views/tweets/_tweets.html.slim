@@ -1,0 +1,26 @@
+= turbo_frame_tag "tweets-page-#{tweets.current_page}" do
+  - tweets.each do |tweet|
+    div.row.gx-0.border-bottom.border-dark
+      div.col-15.mt-25.text-center
+        = image_tag tweet.user.avatar.variant(resize: '45x45!', gravity: :center), alt: tweet.user.avatar.filename.to_s, class: 'rounded-circle' if tweet.user.avatar.attached?
+      div.col-105.mt-25
+        span= tweet.user.name
+        span.text-secondary.ms-2= time_ago_in_words(tweet.created_at)
+        i.bi.bi-three-dots.float-end.me-3.text-secondary
+        br
+        = tweet.text
+        div.d-flex.justify-content-between.align-items-center.me-2
+          = link_to '#', class: 'px-2 py-1 rounded-circle text-secondary chat-icon'
+            i.bi.bi-chat
+          = link_to '#', class: 'px-2 py-1 rounded-circle text-secondary retweet-icon'
+            i.bi.bi-repeat
+          = link_to '#', class: 'px-2 py-1 rounded-circle text-secondary favorite-icon'
+            i.bi.bi-heart
+          = link_to '#', class: 'px-2 py-1 rounded-circle text-secondary analytics-icon'
+            i.bi.bi-bar-chart-fill
+          div 
+            = link_to '#', class: 'px-2 py-1 rounded-circle text-secondary bookmark-icon'
+              i.bi.bi-bookmark
+            = link_to '#', class: 'px-2 py-1 rounded-circle text-secondary upload-icon'
+              i.bi.bi-upload
+  = turbo_frame_tag "tweets-page-#{tweets.next_page}", loading: :lazy, src: path_to_next_page(tweets)

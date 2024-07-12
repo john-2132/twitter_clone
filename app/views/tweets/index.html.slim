@@ -1,5 +1,5 @@
 div.row.h-remain.gx-0
-  div.col-35.bg-black.text-white.overflow-scroll.card.h-100.rounded-0
+  div.col-35.bg-black.text-white.overflow-scroll.card.h-remain.rounded-0.position-fixed.top-header-bottom.z-3
     div.d-flex.align-items-start.flex-column.ms-9.bg-black.h-100
       div.my-4.h4
         = link_to '#', class: 'text-decoration-none text-white'
@@ -34,7 +34,7 @@ div.row.h-remain.gx-0
           i.bi.bi-three-dots
             span.ms-3.fst-normal もっと見る
       div.w-17em.mb-3
-        button.btn.btn-black.btn-lg.rounded-5.w-100.dropdown-toggle.d-flex.align-items-center.justify-content-between.user_icon.border-0 type="button" data-bs-toggle="dropdown" aria-expanded="false"
+        button.btn.btn-black.btn-lg.rounded-5.w-100.dropdown-toggle.d-flex.align-items-center.justify-content-between.user-icon.border-0 type="button" data-bs-toggle="dropdown" aria-expanded="false"
           div.d-flex.align-items-center
             = image_tag @user.avatar.variant(resize: '45x45!', gravity: :center), alt: @user.avatar.filename.to_s, class: 'rounded-circle' if @user.avatar.attached?
             span.ps-2.text-white
@@ -46,20 +46,23 @@ div.row.h-remain.gx-0
             = link_to "#{@user.name}からログアウト", destroy_user_session_path, method: :delete, data: { turbo_method: 'delete' }, class: 'dropdown-item'
 
           
-  div.col-45.bg-black.border.border-dark.text-white.border-top-0
-    div.row.row-cols-2.gx-0.border-bottom.border-dark
-      div.col-15.align-self-center.text-center
+  div.col-45.bg-black.border.border-dark.text-white.border-top-0.ms-col-35.position-relative.top-header-bottom
+    div.row.gx-0.border-bottom.border-dark
+      div.col-15.mt-25.text-center
         = image_tag @user.avatar.variant(resize: '45x45!', gravity: :center), alt: @user.avatar.filename.to_s, class: 'rounded-circle' if @user.avatar.attached?
       div.col-105
-        = form_with url: "#", local: true do |f|
-          .form-group
-            = f.text_area :tweet, class: 'form-control bg-black text-white border-0 rounded-0 align-content-center fs-5 ps-0', placeholder: 'いまどうしてる？'
-      div.col-15
-      div.col-105
-        div.d-flex.align-items-center.justify-content-between
-          = button_to '#', class: 'text-decoration-none border-0 bg-black'
-            i.bi.bi-image.text-primary
-          button.btn.btn-tweet.rounded-5.w-25.mx-2.my-2 ポストする
-  div.col-4.bg-black.text-white
+        div.row.gx-0
+          = form_with url: "#", local: true do |f|
+            .form-group
+              = f.text_area :tweet, class: 'form-control bg-black text-white border-0 rounded-0 align-content-center fs-5 ps-0', placeholder: 'いまどうしてる？'
+        div.row.gx-0
+          div.d-flex.align-items-center.justify-content-between
+            = button_to '#', class: 'text-decoration-none border-0 bg-black'
+              i.bi.bi-image.text-primary
+            button.btn.btn-tweet.rounded-5.w-25.mx-2.my-2 ポストする
+    = turbo_frame_tag 'tweets' do
+      = render partial: "tweets", locals: { tweets: @tweets }
+
+  div.col-4.bg-black.text-white.position-relative.top-header-bottom
     プロモーション
       

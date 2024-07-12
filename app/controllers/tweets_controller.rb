@@ -12,7 +12,7 @@ class TweetsController < ApplicationController
   def follow # rubocop:disable Hc/RailsSpecificActionName
     @user = current_user
     @follow_tweets = Tweet.where(user_id: Follow.where(follow_user_id: @user.id)
-    .select('follower_user_id')).page(params[:page])
+    .select('follower_user_id')).order(created_at: 'DESC').page(params[:page])
     render layout: false, content_type: 'text/vnd.turbo-stream.html'
   end
 end

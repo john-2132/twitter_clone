@@ -26,10 +26,10 @@ html.h-100
       div.col-4.text-white.my-auto
         div.float-end
           - if user_signed_in?
-            = link_to "ログアウト", destroy_user_session_path, method: :delete, data: { turbo_method: 'delete' }, class: 'btn btn-outline-primary me-3'
+            = link_to "ログアウト", destroy_user_session_path, method: :delete, data: { turbo_method: 'delete' }, class: 'btn btn-outline-primary me-9'
           - else
             = link_to "ログイン", new_user_session_path, class: 'btn btn-outline-primary me-3'
-          = link_to "新規登録", new_user_registration_path, class: 'btn btn-primary me-9'
+            = link_to "新規登録", new_user_registration_path, class: 'btn btn-primary me-9'
     = yield
     #toast-container(data-controller="toast" class="position-fixed top-header-bottom end-0")
       - flash.each do |type, message|

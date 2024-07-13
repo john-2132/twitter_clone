@@ -48,28 +48,28 @@ mii.skip_confirmation!
 mii.save!
 
 Follow.create(
-  follow_user_id: admin.id,
-  follower_user_id: coron.id
+  follower_id: admin.id,
+  followed_id: coron.id
 )
 
 Follow.create(
-  follow_user_id: admin.id,
-  follower_user_id: mii.id
+  follower_id: admin.id,
+  followed_id: mii.id
 )
 
 Follow.create(
-  follow_user_id: coron.id,
-  follower_user_id: admin.id
+  follower_id: coron.id,
+  followed_id: admin.id
 )
 
 Follow.create(
-  follow_user_id: coron.id,
-  follower_user_id: mii.id
+  follower_id: coron.id,
+  followed_id: mii.id
 )
 
 Follow.create(
-  follow_user_id: mii.id,
-  follower_user_id: coron.id
+  followew_id: mii.id,
+  followed_id: coron.id
 )
 
 Tweet.create(

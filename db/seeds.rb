@@ -68,7 +68,7 @@ Follow.create(
 )
 
 Follow.create(
-  followew_id: mii.id,
+  follower_id: mii.id,
   followed_id: coron.id
 )
 

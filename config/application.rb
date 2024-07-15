@@ -29,6 +29,7 @@ module Myapp
       g.factory_bot false
     end
     config.action_view.default_form_builder = 'ApplicationFormBuilder'
+    config.active_storage.variant_processor = :mini_magick
 
     config.action_view.field_error_proc = proc { |html_tag, _instance| html_tag }
   end

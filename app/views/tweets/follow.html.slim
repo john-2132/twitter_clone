@@ -1,0 +1,3 @@
+= turbo_stream.replace "tweets"
+  = turbo_frame_tag 'tweets' do
+    = render partial: "tweets", locals: { tweets: @follow_tweets }

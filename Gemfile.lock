@@ -150,6 +150,9 @@ GEM
     htmlbeautifier (1.4.2)
     i18n (1.14.1)
       concurrent-ruby (~> 1.0)
+    i18n_generators (2.2.2)
+      activerecord (>= 3.0.0)
+      railties (>= 3.0.0)
     image_processing (1.12.2)
       mini_magick (>= 4.9.5, < 5)
       ruby-vips (>= 2.0.17, < 3)
@@ -430,6 +433,7 @@ DEPENDENCIES
   dotenv-rails
   factory_bot_rails
   htmlbeautifier
+  i18n_generators
   image_processing (~> 1.2)
   jbuilder
   jsbundling-rails

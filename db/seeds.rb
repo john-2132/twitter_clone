@@ -9,43 +9,64 @@
 #   Character.create(name: "Luke", movie: movies.first)
 
 admin = User.new(
-  name: 'admin',
   email: 'zumiairhc@gmail.com',
   password: ENV['CONFIRMED_USER_PASS'],
-  birth_date: '1992-02-11',
-  phone_number: '090-1111-2222',
-  avatar: ActiveStorage::Blob.create_and_upload!(io: File.open(Rails.root.join('app/assets/images/cat.jpg')),
-                                                 filename: '小松寺の猫'),
   uid: SecureRandom.uuid
 )
 admin.skip_confirmation!
 admin.save!
 
+Profile.create(
+  name: 'admin',
+  birth_date: '1992-02-11',
+  phone_number: '090-1111-2222',
+  avatar: ActiveStorage::Blob.create_and_upload!(io: File.open(Rails.root.join('app/assets/images/cat.jpg')),
+                                                 filename: '小松寺の猫'),
+  header: ActiveStorage::Blob.create_and_upload!(io: File.open(Rails.root.join('app/assets/images/autumn.jpg')),
+                                                 filename: '秋の写真'),
+  self_introduction: '私が管理人です。このサイトで一番偉いです。敬い給へ。',
+  user_id: admin.id
+)
+
 coron = User.new(
-  name: 'coron',
   email: 'coron@example.com',
   password: 'coron_dog',
-  birth_date: '2005-12-12',
-  phone_number: '090-1234-5678',
-  avatar: ActiveStorage::Blob.create_and_upload!(io: File.open(Rails.root.join('app/assets/images/dog.jpg')),
-                                                 filename: '実家のトイプー'),
   uid: SecureRandom.uuid
 )
 coron.skip_confirmation!
 coron.save!
 
+Profile.create(
+  name: 'coron',
+  birth_date: '2005-12-12',
+  phone_number: '090-1234-5678',
+  avatar: ActiveStorage::Blob.create_and_upload!(io: File.open(Rails.root.join('app/assets/images/dog.jpg')),
+                                                 filename: '実家のトイプー'),
+  header: ActiveStorage::Blob.create_and_upload!(io: File.open(Rails.root.join('app/assets/images/lasvegas.jpg')),
+                                                 filename: 'ラスベガスの写真'),
+  self_introduction: '元々は未熟児だったけど、成犬になったらトイプーの平均体重の倍まで大きくなりました。',
+  user_id: coron.id
+)
+
 mii = User.new(
-  name: 'mii',
   email: 'mii@example.com',
   password: 'mii_cat',
-  birth_date: '2016-01-17',
-  phone_number: '090-9876-5432',
-  avatar: ActiveStorage::Blob.create_and_upload!(io: File.open(Rails.root.join('app/assets/images/box_in_cat.jpg')),
-                                                 filename: '実家のネコ'),
   uid: SecureRandom.uuid
 )
 mii.skip_confirmation!
 mii.save!
+
+Profile.create(
+  name: 'mii',
+  birth_date: '2016-01-17',
+  phone_number: '090-9876-5432',
+  avatar: ActiveStorage::Blob.create_and_upload!(io: File.open(Rails.root.join('app/assets/images/box_in_cat.jpg')),
+                                                 filename: '実家のネコ'),
+  header: ActiveStorage::Blob.create_and_upload!(io: File.open(Rails.root.join('app/assets/images/flower.jpg')),
+                                                 filename: '花の写真'),
+  self_introduction: '親猫の育児から見放されて倉庫で一人だったところを保護されて家族になった、最年少の家族。',
+  user_id: mii.id
+)
 
 Follow.create(
   follower_id: admin.id,
@@ -72,9 +93,19 @@ Follow.create(
   followed_id: coron.id
 )
 
-Tweet.create(
+admin_first_tweet = Tweet.create(
   text: '私が管理人だ！',
   user_id: admin.id
+)
+
+Favorite.create(
+  tweet_id: admin_first_tweet.id,
+  user_id: coron.id
+)
+
+Favorite.create(
+  tweet_id: admin_first_tweet.id,
+  user_id: mii.id
 )
 
 Tweet.create(
@@ -82,14 +113,42 @@ Tweet.create(
   user_id: admin.id
 )
 
-Tweet.create(
+mii_request_tweet = Tweet.create(
   text: '爪とぎを新しくしてくれ',
   user_id: mii.id
 )
 
+Favorite.create(
+  tweet_id: mii_request_tweet.id,
+  user_id: admin.id
+)
+
 Tweet.create(
+  text: 'かしこまり',
+  parent_id: mii_request_tweet.id,
+  user_id: admin.id
+)
+
+coron_request_tweet = Tweet.create(
   text: 'ドッグフードより肉がいい',
   user_id: coron.id
+)
+
+admin_reply_tweet_to_coron = Tweet.create(
+  text: 'りょうかいした',
+  parent_id: coron_request_tweet.id,
+  user_id: admin.id
+)
+
+Tweet.create(
+  text: '松坂牛でよろ',
+  parent_id: admin_reply_tweet_to_coron.id,
+  user_id: coron.id
+)
+
+Favorite.create(
+  tweet_id: coron_request_tweet.id,
+  user_id: admin.id
 )
 
 Tweet.create(
@@ -97,14 +156,24 @@ Tweet.create(
   user_id: coron.id
 )
 
-Tweet.create(
+mii_dont_touch_tweet = Tweet.create(
   text: '気が向かんときは触るな',
   user_id: mii.id
 )
 
-Tweet.create(
+Retweet.create(
+  tweet_id: mii_dont_touch_tweet.id,
+  user_id: admin.id
+)
+
+mii_bite_tweet = Tweet.create(
   text: '今日は噛みつきたい気分',
   user_id: mii.id
+)
+
+Retweet.create(
+  tweet_id: mii_bite_tweet.id,
+  user_id: admin.id
 )
 
 Tweet.create(
@@ -117,9 +186,14 @@ Tweet.create(
   user_id: mii.id
 )
 
-Tweet.create(
+coron_snack_tweet = Tweet.create(
   text: 'おやつ！おやつ！！！',
   user_id: coron.id
+)
+
+Retweet.create(
+  tweet_id: coron_snack_tweet.id,
+  user_id: mii.id
 )
 
 Tweet.create(
@@ -132,9 +206,14 @@ Tweet.create(
   user_id: admin.id
 )
 
-Tweet.create(
+mii_feign_ignorance_tweet = Tweet.create(
   text: 'おい、頭撫でろや',
   user_id: mii.id
+)
+
+Retweet.create(
+  tweet_id: mii_feign_ignorance_tweet.id,
+  user_id: coron.id
 )
 
 Tweet.create(

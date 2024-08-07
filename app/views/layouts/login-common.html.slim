@@ -1,0 +1,92 @@
+doctype html
+html.h-100
+  head
+    meta content="text/html; charset=UTF-8" http-equiv="Content-Type"
+    title Myapp
+    meta content="width=device-width,initial-scale=1" name="viewport"
+    = csrf_meta_tags
+    = csp_meta_tag
+    = stylesheet_link_tag "application", "data-turbo-track": "reload"
+    = javascript_include_tag "application", "data-turbo-track": "reload", defer: true
+  body.h-100.overscroll-none
+    div class="#{user_signed_in? ? 'bg-black border-dark' : 'bg-dark border-secondary'} row gx-0 h-header position-fixed w-100 top-0 z-4" id="header"
+      div.col-35.text-white.rounded-0.my-auto
+        h3 class="mb-0 d-flex align-items-center ms-9"
+          = link_to tweets_path, class: "text-decoration-none text-white"
+            i class="bi bi-twitter"
+              span.ms-2.fst-normal Twitter
+      div.col-45.border.border-dark.text-white.border-top-0
+      div.col-4.text-white.my-auto
+        div.float-end
+          = link_to "ログアウト", destroy_user_session_path, method: :delete, data: { turbo_method: 'delete' }, class: 'btn btn-outline-primary me-9'
+    div.row.h-remain.gx-0
+      div.col-35.bg-black.text-white.overflow-scroll.card.h-remain.rounded-0.position-fixed.top-header-bottom.z-3
+        div.d-flex.align-items-start.flex-column.ms-9.bg-black.h-100
+          div.my-4.h4
+            = link_to tweets_path, class: "text-decoration-none text-white #{'selected-sidemenu' if current_page?(tweets_path)}", id: 'home'
+              i.bi.bi-house-fill
+                span.ms-3.fst-normal ホーム
+          div.mb-4.h4
+            = link_to '#', class: 'text-decoration-none mb-2 text-white'
+              i.bi.bi-hash
+                span.ms-3.fst-normal 話題を検索
+          div.mb-4.h4
+            = link_to '#', class: 'text-decoration-none mb-2 text-white'
+              i.bi.bi-bell
+                span.ms-3.fst-normal 通知
+          div.mb-4.h4
+            = link_to '#', class: 'text-decoration-none mb-2 text-white'
+              i.bi.bi-envelope
+                span.ms-3.fst-normal メッセージ
+          div.mb-4.h4
+            = link_to '#', class: 'text-decoration-none mb-2 text-white'
+              i.bi.bi-bookmark
+                span.ms-3.fst-normal ブックマーク
+          div.mb-4.h4
+            = link_to '#', class: 'text-decoration-none mb-2 text-white'
+              i.bi.bi-ticket
+                span.ms-3.fst-normal Twitter Blue
+          div.mb-4.h4
+            = link_to profile_path, class: "text-decoration-none mb-2 text-white #{'selected-sidemenu' if current_page?(profile_path)}"
+              i.bi.bi-person
+                span.ms-3.fst-normal プロフィール
+          div.mb-auto.h4
+            = link_to '#', class: 'text-decoration-none mb-auto text-white'
+              i.bi.bi-three-dots
+                span.ms-3.fst-normal もっと見る
+          div.w-17em.mb-3
+            button.btn.btn-black.btn-lg.rounded-5.w-100.dropdown-toggle.d-flex.align-items-center.justify-content-between.user-icon.border-0 type="button" data-bs-toggle="dropdown" aria-expanded="false"
+              div.d-flex.align-items-center
+                = image_tag @user.profile.avatar.variant(resize: '45x45!', gravity: :center), alt: @user.profile.avatar.filename.to_s, class: 'rounded-circle' if @user.profile.avatar.attached?
+                span.ps-2.text-white
+                  = @user.profile.name
+              i.bi.bi-three-dots.ms-auto.text-white
+            ul.dropdown-menu.dropdown-menu-black.text-center.w-inherit.border-dark.shadow-lg
+              li
+                = link_to "#{@user.profile.name}からログアウト", destroy_user_session_path, method: :delete, data: { turbo_method: 'delete' }, class: 'dropdown-item'
+      div.col-45.bg-black.border.border-dark.text-white.border-top-0.ms-col-35.position-relative.top-header-bottom
+        = yield
+      div.col-4.bg-black.text-white.position-relative.top-header-bottom
+        プロモーション
+      #toast-container(data-controller="toast" class="position-fixed top-header-bottom end-0")
+        - flash.each do |type, message|
+          .mb-2.toast(class="toast" role="alert" aria-live="assertive" aria-atomic="true")
+            .toast-header class="text-#{type == 'notice' ? 'bg-success' : 'bg-danger'}"
+              strong.me-auto
+                = type.to_s.capitalize
+              button.btn-close(data-bs-dismiss="toast")
+            .toast-body
+              = message
+        - if defined?(resource)
+          - if resource.errors.any?
+            .mb-2.toast(class="toast" role="alert" aria-live="assertive" aria-atomic="true")
+              .toast-header
+                strong.me-auto
+                  = I18n.t("errors.messages.not_saved",
+                    count: resource.errors.count,
+                    resource: resource.class.model_name.human.downcase)
+                button.btn-close(data-bs-dismiss="toast")
+              .toast-body
+                ul
+                  - resource.errors.full_messages.each do |message|
+                    li= message

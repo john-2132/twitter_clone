@@ -20,12 +20,6 @@ class User < ApplicationRecord
   has_many :favorite_tweets, through: :favorites, source: :tweet
 
   def replies_and_retweets(_user_id)
-    # replies_sql = Tweet.where(id: Tweet.select(:parent_id).where.not(parent_id: nil).where(user_id:))
-    #                    .or(Tweet.where(id: Tweet.select(:parent_id).where.not(parent_id: nil)).where(user_id:)).to_sql
-    # retweets_sql = Tweet.joins(:retweets).where(retweets: { user_id: id }).to_sql
-
-    # Tweet.from("(#{replies_sql} UNION #{retweets_sql}) AS tweets")
-    #      .preload(user: { profile: :avatar_attachment }).order(created_at: :desc)
     reply_ids = tweets.select(:parent_id).where.not(parent_id: nil).pluck(:parent_id)
     retweet_ids = retweets.pluck(:tweet_id)
     Tweet.where(id: [*reply_ids, *retweet_ids]).preload(user: { profile: :avatar_attachment }).order(created_at: :desc)

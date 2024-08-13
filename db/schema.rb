@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_07_13_120420) do
+ActiveRecord::Schema[7.0].define(version: 2024_08_03_141113) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -42,6 +42,15 @@ ActiveRecord::Schema[7.0].define(version: 2024_07_13_120420) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
+  create_table "favorites", force: :cascade do |t|
+    t.bigint "tweet_id", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["tweet_id"], name: "index_favorites_on_tweet_id"
+    t.index ["user_id"], name: "index_favorites_on_user_id"
+  end
+
   create_table "follows", id: false, force: :cascade do |t|
     t.bigint "follower_id", null: false
     t.bigint "followed_id", null: false
@@ -49,6 +58,28 @@ ActiveRecord::Schema[7.0].define(version: 2024_07_13_120420) do
     t.datetime "updated_at", null: false
     t.index ["followed_id"], name: "index_follows_on_followed_id"
     t.index ["follower_id"], name: "index_follows_on_follower_id"
+  end
+
+  create_table "profiles", force: :cascade do |t|
+    t.string "name", default: "", null: false
+    t.date "birth_date", default: "1930-01-01", null: false
+    t.string "phone_number", default: "", null: false
+    t.text "self_introduction", default: ""
+    t.string "place", default: ""
+    t.string "web_site", default: ""
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_profiles_on_user_id"
+  end
+
+  create_table "retweets", force: :cascade do |t|
+    t.bigint "tweet_id", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["tweet_id"], name: "index_retweets_on_tweet_id"
+    t.index ["user_id"], name: "index_retweets_on_user_id"
   end
 
   create_table "tasks", force: :cascade do |t|
@@ -64,6 +95,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_07_13_120420) do
     t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "parent_id"
+    t.index ["parent_id"], name: "index_tweets_on_parent_id"
     t.index ["user_id"], name: "index_tweets_on_user_id"
     t.check_constraint "(char_length(regexp_replace(text::text, '[\\u0000-\\u007F]'::text, ''::text, 'g'::text)) * 2 + char_length(regexp_replace(text::text, '[^\\u0000-\\u007F]'::text, ''::text, 'g'::text))) <= 280", name: "text_length_check"
   end
@@ -88,9 +121,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_07_13_120420) do
     t.datetime "locked_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.date "birth_date", default: "1930-01-01", null: false
-    t.string "phone_number", default: "", null: false
-    t.string "name", default: "", null: false
     t.string "provider", default: "", null: false
     t.string "uid", default: "", null: false
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
@@ -102,7 +132,13 @@ ActiveRecord::Schema[7.0].define(version: 2024_07_13_120420) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "favorites", "tweets"
+  add_foreign_key "favorites", "users"
   add_foreign_key "follows", "users", column: "followed_id", name: "followed_id"
   add_foreign_key "follows", "users", column: "follower_id", name: "follower_id"
+  add_foreign_key "profiles", "users"
+  add_foreign_key "retweets", "tweets"
+  add_foreign_key "retweets", "users"
+  add_foreign_key "tweets", "tweets", column: "parent_id"
   add_foreign_key "tweets", "users"
 end

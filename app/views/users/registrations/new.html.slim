@@ -7,19 +7,21 @@ div.bg-dark.h-100
       div.mx-5
         h2.mb-3 アカウント作成
         = form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f|
-          .field.form-floating.mb-3
-            = f.text_field :name, autofocus: true, autocomplete: "name", class: 'form-control bg-black text-white'
-            = f.label :name, class: 'text-light'
+          = f.fields_for :profile do |profile_form|
+            .field.form-floating.mb-3
+              = profile_form.text_field :name, autofocus: true, autocomplete: "name", class: 'form-control bg-black text-white'
+              = profile_form.label :name, class: 'text-light'
           .field.form-floating.mb-3
             = f.email_field :email, autofocus: true, autocomplete: "email", class: 'form-control bg-black text-white'
             = f.label :email, class: 'text-light'
-          .field.form-floating.mb-3
-            = f.telephone_field :phone_number, autocomplete: "phone-number", class: 'form-control bg-black text-white'
-            = f.label :phone_number, class: 'text-light'
-          .field.mb-3
-            = f.label :birth_date, class: 'mb-2'
-            br/
-            = raw sprintf(f.date_select( :birth_date, {use_month_numbers: true, start_year: 1930, end_year: Time.now.year, include_blank: true, date_separator: '%s'}, {:class => 'bg-black text-light'}), '年 ', '月 ',) + '日' 
+          = f.fields_for :profile do |profile_form|
+            .field.form-floating.mb-3
+              = profile_form.telephone_field :phone_number, autocomplete: "phone-number", class: 'form-control bg-black text-white'
+              = profile_form.label :phone_number, class: 'text-light'
+            .field.mb-3
+              = profile_form.label :birth_date, class: 'mb-2'
+              br/
+              = raw sprintf(profile_form.date_select( :birth_date, {use_month_numbers: true, start_year: 1930, end_year: Time.now.year, include_blank: true, date_separator: '%s'}, {:class => 'bg-black text-light'}), '年 ', '月 ',) + '日' 
           .field.form-floating.mb-3
             = f.password_field :password, autocomplete: "new-password", class: 'form-control bg-black text-white'
             = f.label :password, class: 'text-light'

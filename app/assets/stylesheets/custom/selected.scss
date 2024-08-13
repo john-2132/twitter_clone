@@ -1,5 +1,18 @@
-.selected {
+.selected-100 {
   text-decoration: underline #1da1f2;
   text-underline-offset: 100%;
   text-decoration-thickness: 4px;
+  color: rgba(var(--bs-white-rgb), var(--bs-text-opacity)) !important;
+}
+
+.selected-50 {
+  text-decoration: underline #1da1f2;
+  text-underline-offset: 50%;
+  text-decoration-thickness: 4px;
+  color: rgba(var(--bs-white-rgb), var(--bs-text-opacity)) !important;
+}
+
+.selected-sidemenu {
+  font-size: 1.6rem;
+  font-weight: bold;
 }

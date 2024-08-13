@@ -12,4 +12,7 @@ Rails.application.routes.draw do
   root 'tweets#index'
   get 'tweets', to: 'tweets#index'
   get 'tweets/folllow', to: 'tweets#follow'
+  get 'profiles/detail', to: 'profiles#show', as: 'profile'
+  get 'profiles/reply_and_retweet', to: 'profiles#reply_and_retweet', as: 'reply'
+  get 'profiles/favorite', to: 'profiles#favorite', as: 'favorite'
 end

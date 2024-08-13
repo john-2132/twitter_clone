@@ -16,20 +16,10 @@ html.h-100
             i class="bi bi-twitter"
               span.ms-2.fst-normal Twitter
       div.col-45.border.border-dark.text-white.border-top-0
-        - if user_signed_in?
-          .d-flex.justify-content-space-around.h-100
-            = link_to tweets_path, id: 'recommendBtn', class: 'w-50 btn btn-black text-white align-content-center tweet-type rounded-0 selected', data: { turbo_frame: "tweets", turbo_action: :replace }
-              span.fst-normal おすすめ
-            = link_to tweets_folllow_path, id: 'followingBtn', class: 'w-50 btn btn-black text-white align-content-center tweet-type rounded-0', data: { turbo_frame: "tweets", turbo_action: :replace }
-              span.fst-normal フォロー中
-            .underline
       div.col-4.text-white.my-auto
         div.float-end
-          - if user_signed_in?
-            = link_to "ログアウト", destroy_user_session_path, method: :delete, data: { turbo_method: 'delete' }, class: 'btn btn-outline-primary me-9'
-          - else
-            = link_to "ログイン", new_user_session_path, class: 'btn btn-outline-primary me-3'
-            = link_to "新規登録", new_user_registration_path, class: 'btn btn-primary me-9'
+          = link_to "ログイン", new_user_session_path, class: 'btn btn-outline-primary me-3'
+          = link_to "新規登録", new_user_registration_path, class: 'btn btn-primary me-9'
     = yield
     #toast-container(data-controller="toast" class="position-fixed top-header-bottom end-0")
       - flash.each do |type, message|

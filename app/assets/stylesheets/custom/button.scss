@@ -2,3 +2,18 @@
   background-color: #1d9bf0;
   --bs-btn-hover-bg: #1d9cf0d3;
 }
+
+.file-upload-label {
+  display: inline-block;
+  cursor: pointer;
+  background-color: #007bff;
+  color: white;
+  padding-right: 0.5rem;
+  padding-left: 0.5rem;
+  border-radius: 100%;
+  opacity: 70%;
+}
+
+.file-upload-label:hover {
+  background-color: #0056b3;
+}

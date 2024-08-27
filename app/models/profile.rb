@@ -4,6 +4,7 @@ class Profile < ApplicationRecord
   has_one_attached :avatar
   has_one_attached :header
   belongs_to :user
+  validates :name, presence: true
 
   VALID_PHONE_NUMBER_REGEX = /\A0(
     \d{1}[-(]?\d{4}|

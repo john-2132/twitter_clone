@@ -9,6 +9,16 @@ class ProfilesController < ApplicationController
                        .where(parent_id: nil).order(created_at: 'DESC').page(params[:page])
   end
 
+  def edit; end
+
+  def update
+    if @profile.update(profile_params)
+      redirect_to profile_path
+    else
+      render :edit, status: :unprocessable_entity
+    end
+  end
+
   def reply_and_retweet # rubocop:disable Hc/RailsSpecificActionName
     @replies_and_retweets = @user.replies_and_retweets(@user.id).page(params[:page])
   end
@@ -23,5 +33,9 @@ class ProfilesController < ApplicationController
   def current_user_profile
     @user = current_user
     @profile = Profile.find(@user.id)
+  end
+
+  def profile_params
+    params.require(:profile).permit(:name, :self_introduction, :place, :web_site, :header, :avatar)
   end
 end

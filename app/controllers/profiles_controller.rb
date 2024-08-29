@@ -12,6 +12,8 @@ class ProfilesController < ApplicationController
   def edit; end
 
   def update
+    @profile.avatar.purge if params[:profile][:avatar_id]
+    @profile.header.purge if params[:profile][:header_id]
     if @profile.update(profile_params)
       redirect_to profile_path
     else

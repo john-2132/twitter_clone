@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
 
   def layout_by_resource
     if user_signed_in?
-      'login-common'
+      'login_common'
     else
       'application'
     end

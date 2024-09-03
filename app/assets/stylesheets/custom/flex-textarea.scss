@@ -1,0 +1,55 @@
+.flex_text_area {
+  position: relative;
+  font-size: 1rem;
+  line-height: 1.8;
+}
+
+.flex_text_area_dummy {
+  overflow: hidden;
+  visibility: hidden;
+  box-sizing: border-box;
+  min-height: 40px;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  border: 1px solid;
+  line-height: inherit !important;
+}
+
+.flex_text_area_input_area {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  overflow: hidden;
+  box-sizing: border-box;
+  padding: 5px 15px;
+  width: 100%;
+  height: 100% !important;
+  background-color: transparent;
+  border: 1px solid #b6c3c6;
+  border-radius: 4px;
+  color: inherit;
+  font: inherit;
+  letter-spacing: inherit;
+  resize: none;
+  line-height: inherit !important;
+}
+
+.flex_text_area_input_area:focus {
+  box-shadow: 0 0 0 4px rgba(35, 167, 195, 0.3);
+  outline: 0;
+}
+
+.form-floating > .flex_text_area_dummy {
+  line-height: 1.25;
+}
+
+.form-floating > .flex_text_area_dummy {
+  padding: 1rem 0.75rem;
+}
+
+.form-floating > .flex_text_area_dummy:not(:placeholder-shown){
+  padding-top: 1.625rem;
+  padding-bottom: 0.625rem;
+}

@@ -25,8 +25,10 @@
       .field.form-floating.mb-3
         = f.text_field :name, autofocus: true, required: true, autocomplete: "name", class: 'form-control bg-black text-white', value: "#{@profile.name}"
         = f.label :name, class: 'text-light'
-      .field.form-floating.mb-3
-        = f.text_area :self_introduction, autofocus: true, autocomplete: "name", class: 'form-control bg-black text-white', value: "#{@profile.self_introduction}"
+      .field.form-floating.mb-3.flex_text_area
+        div.flex_text_area_dummy aria-hidden='true'
+          = "#{@profile.self_introduction};"
+        = f.text_area :self_introduction, autofocus: true, autocomplete: "name", class: 'form-control bg-black text-white flex_text_area_input_area', value: "#{@profile.self_introduction}"
         = f.label :self_introduction, class: 'text-light'
       .field.form-floating.mb-3
         = f.text_field :place, autofocus: true, autocomplete: "name", class: 'form-control bg-black text-white', value: "#{@profile.place}"

@@ -23,9 +23,15 @@ div.px-3.py-3.minus-mt-8
       = @profile.self_introduction
   div.pb-2
     small.text-secondary
-      i.bi.bi-balloon.fst-normal
+      - if @profile.place.present?
+        i.bi.bi-geo-alt.fst-normal.me-1.d-inline-block
+          = " #{@profile.place}"
+      - if @profile.web_site.present?
+        i.bi.bi-link-45deg.fst-normal.me-1.d-inline-block
+          = " #{@profile.web_site}"
+      i.bi.bi-balloon.fst-normal.me-2.d-inline-block
         = " 誕生日: #{l @profile.birth_date, format: :default_ja}"
-      i.bi.bi-calendar4-week.ms-2.fst-normal
+      i.bi.bi-calendar4-week.fst-normal.d-inline-block
         = " #{l @profile.created_at, format: :short_ja}からTwitterを利用しています"
   div.pb-2
     small 

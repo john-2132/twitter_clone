@@ -3,7 +3,21 @@
 }
 
 .position-profile-avatar {
-  position: absolute;
-  top: 130px;
+  position: relative;
+  top: -4rem;
   left: 20px;
+}
+
+.position-header-edit {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%) !important;
+}
+
+.position-avatar-edit {
+  position: absolute;
+  transform: translateX(-50%) translateY(-50%) !important;
+  top: 50%;
+  left: 50%;
 }

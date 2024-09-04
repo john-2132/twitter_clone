@@ -1,0 +1,41 @@
+= turbo_frame_tag "content" do
+  .h-header.position-fixed.top-0.z-5.w-center-content.d-flex.align-items-center
+    = link_to :back, class: 'ms-2 px-2 py-1 rounded-circle text-secondary back-icon', data: { turbo_frame: '_top' }
+      i.bi.bi-arrow-left
+    div.d-flex.flex-column.ms-2
+      div.fs-4 = "プロフィールを編集"
+      small class="text-secondary"
+        = @profile.name
+    div.ms-auto.me-2
+      button.btn.btn-light.rounded-5.w-100 type='submit' form='updateProfile' 保存
+  = form_with model: Profile.new, url: update_profile_path, id: 'updateProfile', data: {turbo_frame: 'content', turbo_action: :advance}, local: true do |f|
+    div.w-100.position-relative
+      = image_tag @profile.header.variant(resize: '600x200!', gravity: :center), alt: @profile.header.filename.to_s, class: 'w-100 z-1', id: 'headerImage'
+      div.position-header-edit.z-2
+        = f.file_field :header, accept: "image/jpg", class: "d-none"
+        = f.label :header, class: "file-upload-label"
+          i.bi.bi-camera.fs-3.text-white
+    div.w-fit-content.position-profile-avatar
+      = image_tag @profile.avatar.variant(resize: '130x130!', gravity: :center), alt: @profile.avatar.filename.to_s, class: 'rounded-circle border border-4 border-black', id: 'avatarImage' if @profile.avatar.attached?
+      div.position-avatar-edit
+        = f.file_field :avatar, accept: "image/jpg", class: "d-none"
+        = f.label :avatar, class: "file-upload-label"
+          i.bi.bi-camera.fs-3.text-white
+    div.px-3.py-3.minus-mt-4
+      .field.form-floating.mb-3
+        = f.text_field :name, autofocus: true, required: true, autocomplete: "name", class: 'form-control bg-black text-white', value: "#{@profile.name}"
+        = f.label :name, class: 'text-light'
+      .field.form-floating.mb-3.flex_text_area
+        div.flex_text_area_dummy aria-hidden='true'
+          = "#{@profile.self_introduction};"
+        = f.text_area :self_introduction, autofocus: true, autocomplete: "name", class: 'form-control bg-black text-white flex_text_area_input_area', value: "#{@profile.self_introduction}"
+        = f.label :self_introduction, class: 'text-light'
+      .field.form-floating.mb-3
+        = f.text_field :place, autofocus: true, autocomplete: "name", class: 'form-control bg-black text-white', value: "#{@profile.place}"
+        = f.label :place, class: 'text-light'
+      .field.form-floating.mb-3
+        = f.text_field :web_site, autofocus: true, autocomplete: "name", class: 'form-control bg-black text-white', value: "#{@profile.web_site}"
+        = f.label :web_site, class: 'text-light'
+      small.text-light 生年月日
+      br
+      = "#{l @profile.birth_date, format: :default_ja}"

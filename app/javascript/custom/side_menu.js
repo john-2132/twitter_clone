@@ -17,9 +17,7 @@ document.addEventListener('turbo:load', () => {
   }
 
   avatarLink.addEventListener('turbo:click', () => {
-    console.log('something moving', side_menus);
     side_menus.forEach(s => s.classList.remove('selected-sidemenu'));
     profile.classList.add('selected-sidemenu');
-    // console.log(side_menu);
   });
 });

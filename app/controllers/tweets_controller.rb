@@ -10,10 +10,27 @@ class TweetsController < ApplicationController
                    .order(created_at: 'DESC').page(params[:page])
   end
 
+  def create
+    @user = current_user
+    @tweet = Tweet.new(text: tweet_params[:tweet], user_id: @user.id)
+    @tweets = Tweet.preload(user: { profile: :avatar_attachment }).where(parent_id: nil)
+                   .order(created_at: 'DESC').page(params[:page])
+
+    return if @tweet.save
+
+    render :index, status: :unprocessable_entity
+  end
+
   def follow # rubocop:disable Hc/RailsSpecificActionName
     @user = current_user
     @follow_tweets = Tweet.preload(user: { profile: :avatar_attachment })
                           .where(user_id: @user.followings).where(parent_id: nil)
                           .order(created_at: 'DESC').page(params[:page])
+  end
+
+  private
+
+  def tweet_params
+    params.require(:tweet).permit(:tweet)
   end
 end

@@ -11,6 +11,7 @@ Rails.application.routes.draw do
 
   root 'tweets#index'
   get 'tweets', to: 'tweets#index'
+  post 'tweets/post', to: 'tweets#create'
   get 'tweets/folllow', to: 'tweets#follow'
   get 'profiles/detail', to: 'profiles#show', as: 'profile'
   get 'profiles/edit', to: 'profiles#edit', as: 'edit_profile'

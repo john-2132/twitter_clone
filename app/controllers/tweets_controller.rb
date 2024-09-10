@@ -12,7 +12,7 @@ class TweetsController < ApplicationController
 
   def create
     @user = current_user
-    @tweet = Tweet.new(text: tweet_params[:tweet], user_id: @user.id)
+    @tweet = @user.tweets.build(text: tweet_params[:tweet])
 
     return if @tweet.save
 

@@ -13,10 +13,11 @@ class TweetsController < ApplicationController
   def create
     @user = current_user
     @tweet = Tweet.new(text: tweet_params[:tweet], user_id: @user.id)
-    @tweets = Tweet.preload(user: { profile: :avatar_attachment }).where(parent_id: nil)
-                   .order(created_at: 'DESC').page(params[:page])
 
     return if @tweet.save
+
+    @tweets = Tweet.preload(user: { profile: :avatar_attachment }).where(parent_id: nil)
+                   .order(created_at: 'DESC').page(params[:page])
 
     render :index, status: :unprocessable_entity
   end

@@ -6,7 +6,7 @@ function flexTextarea(el) {
 }
 
 
-'turbo:load turbo:render'.split(' ').forEach( (eName) => {
+'turbo:load turbo:frame-render'.split(' ').forEach( (eName) => {
   document.addEventListener(eName, () => {
     document.querySelectorAll('.flex_text_area').forEach(flexTextarea)
   })

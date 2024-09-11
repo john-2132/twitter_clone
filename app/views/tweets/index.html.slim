@@ -6,17 +6,6 @@
       span.fst-normal フォロー中
     .underline
   div.row.gx-0.border-bottom.border-dark
-    div.col-15.mt-25.text-center
-      = link_to (image_tag @user.profile.avatar.variant(resize: '45x45!', gravity: :center), alt: @user.profile.avatar.filename.to_s, class: 'rounded-circle' if @user.profile.avatar.attached?), profile_path, data: { turbo_frame: '_top' }
-    div.col-105
-      div.row.gx-0
-        = form_with url: "#", local: true do |f|
-          .form-group
-            = f.text_area :tweet, class: 'form-control bg-black text-white border-0 rounded-0 align-content-center fs-5 ps-0', placeholder: 'いまどうしてる？'
-      div.row.gx-0
-        div.d-flex.align-items-center.justify-content-between
-          = button_to '#', class: 'text-decoration-none border-0 bg-black'
-            i.bi.bi-image.text-primary
-          button.btn.btn-tweet.rounded-5.w-25.mx-2.my-2 ポストする
+    = render partial: "tweets/new_tweet", locals: { user: @user }
     = turbo_frame_tag 'tweets' do
       = render partial: "tweets", locals: { tweets: @tweets }

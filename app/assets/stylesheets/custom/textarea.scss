@@ -1,0 +1,8 @@
+.text_area_without_focus_outline {
+  outline: none !important;
+}
+
+.text_area_without_focus_outline:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}

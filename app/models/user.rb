@@ -22,7 +22,8 @@ class User < ApplicationRecord
   def replies_and_retweets(_user_id)
     reply_ids = tweets.select(:parent_id).where.not(parent_id: nil).pluck(:parent_id)
     retweet_ids = retweets.pluck(:tweet_id)
-    Tweet.where(id: [*reply_ids, *retweet_ids]).preload(user: { profile: :avatar_attachment }).order(created_at: :desc)
+    Tweet.where(id: [*reply_ids, *retweet_ids]).preload(user: { profile: :avatar_attachment },
+                                                        image_attachment: :blob).order(created_at: :desc)
   end
 
   # Include default devise modules. Others available are:

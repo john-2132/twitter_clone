@@ -8,6 +8,8 @@ div.row.gx-0.border-bottom.border-dark
     br
     span.text-wrap
       = tweet.text
+    div.me-2
+      = image_tag tweet.image, class: 'rounded-4 w-100 my-2' if tweet.image.attached?
     div.d-flex.justify-content-between.align-items-center.me-2
       = link_to '#', class: 'px-2 py-1 rounded-circle text-secondary chat-icon text-decoration-none'
         i.bi.bi-chat

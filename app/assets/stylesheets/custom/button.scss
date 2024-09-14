@@ -17,3 +17,27 @@
 .file-upload-label:hover {
   background-color: #0056b3;
 }
+
+.tweet-image-label {
+  display: inline-block;
+  cursor: pointer;
+  padding: 0.25rem 0.5rem;
+  border-radius: 100%;
+  opacity: 70%;
+}
+
+.tweet-image-label:hover {
+  background-color: rgb(0, 20, 40);
+}
+
+.tweet-image-label:active {
+  background-color: rgb(0, 40, 80);
+}
+
+.tweet-image-clear:hover {
+  background-color: rgb(40, 40, 40) !important;
+}
+
+.tweet-image-clear:active {
+  background-color: rgb(80, 80, 80) !important;
+}

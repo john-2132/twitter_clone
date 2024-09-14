@@ -6,17 +6,19 @@ class TweetsController < ApplicationController
 
   def index
     @user = current_user
-    @tweets = Tweet.preload(user: { profile: :avatar_attachment }).where(parent_id: nil)
+    @tweets = Tweet.preload(user: { profile: :avatar_attachment }, image_attachment: :blob)
+                   .where(parent_id: nil)
                    .order(created_at: 'DESC').page(params[:page])
   end
 
   def create
     @user = current_user
-    @tweet = @user.tweets.build(text: tweet_params[:tweet])
+    @tweet = @user.tweets.build(tweet_params)
 
     return if @tweet.save
 
-    @tweets = Tweet.preload(user: { profile: :avatar_attachment }).where(parent_id: nil)
+    @tweets = Tweet.preload(user: { profile: :avatar_attachment }, image_attachment: :blob)
+                   .where(parent_id: nil)
                    .order(created_at: 'DESC').page(params[:page])
 
     render :index, status: :unprocessable_entity
@@ -24,7 +26,7 @@ class TweetsController < ApplicationController
 
   def follow # rubocop:disable Hc/RailsSpecificActionName
     @user = current_user
-    @follow_tweets = Tweet.preload(user: { profile: :avatar_attachment })
+    @follow_tweets = Tweet.preload(user: { profile: :avatar_attachment }, image_attachment: :blob)
                           .where(user_id: @user.followings).where(parent_id: nil)
                           .order(created_at: 'DESC').page(params[:page])
   end
@@ -32,6 +34,6 @@ class TweetsController < ApplicationController
   private
 
   def tweet_params
-    params.require(:tweet).permit(:tweet)
+    params.require(:tweet).permit(:text, :image)
   end
 end

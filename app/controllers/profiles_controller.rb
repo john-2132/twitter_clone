@@ -5,7 +5,8 @@ class ProfilesController < ApplicationController
   before_action :current_user_profile
 
   def show
-    @own_tweets = Tweet.preload(user: { profile: :avatar_attachment }).where(user_id: @user.id)
+    @own_tweets = Tweet.preload(user: { profile: :avatar_attachment }, image_attachment: :blob)
+                       .where(user_id: @user.id)
                        .where(parent_id: nil).order(created_at: 'DESC').page(params[:page])
   end
 
@@ -26,7 +27,7 @@ class ProfilesController < ApplicationController
   end
 
   def favorite # rubocop:disable Hc/RailsSpecificActionName
-    @favorite_tweets = @user.favorite_tweets.preload(user: { profile: :avatar_attachment })
+    @favorite_tweets = @user.favorite_tweets.preload(user: { profile: :avatar_attachment }, image_attachment: :blob)
                             .order(created_at: 'DESC').page(params[:page])
   end
 

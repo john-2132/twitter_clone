@@ -10,12 +10,16 @@ Rails.application.routes.draw do
   }
 
   root 'tweets#index'
+
   get 'tweets', to: 'tweets#index'
-  post 'tweets/post', to: 'tweets#create'
+  get 'tweets/:id', to: 'tweets#show', as: 'tweet_detail'
   get 'tweets/folllow', to: 'tweets#follow'
+  post 'tweets/post', to: 'tweets#create'
+  post 'tweets/:id/reply', to: 'tweets#reply', as: 'tweet_reply'
+
   get 'profiles/detail', to: 'profiles#show', as: 'profile'
   get 'profiles/edit', to: 'profiles#edit', as: 'edit_profile'
-  post 'profiles/update', to: 'profiles#update', as: 'update_profile'
   get 'profiles/reply_and_retweet', to: 'profiles#reply_and_retweet', as: 'reply'
   get 'profiles/favorite', to: 'profiles#favorite', as: 'favorite'
+  post 'profiles/update', to: 'profiles#update', as: 'update_profile'
 end

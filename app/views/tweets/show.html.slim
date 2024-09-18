@@ -1,0 +1,25 @@
+= turbo_frame_tag "content" do
+  .h-header.position-fixed.top-0.z-5.w-center-content.d-flex.align-items-center
+    = link_to :back, class: 'ms-2 px-2 py-1 rounded-circle text-secondary back-icon', data: { turbo_frame: '_top' }
+      i.bi.bi-arrow-left
+    div.d-flex.flex-column.ms-2
+      div.fs-4 = "ポストする"
+  div.row.gx-0.border-dark
+    div.col-15.mt-25.px-3
+      = image_tag @tweet.user.profile.avatar.variant(resize: '45x45!', gravity: :center), alt: @tweet.user.profile.avatar.filename.to_s, class: 'rounded-circle' if @tweet.user.profile.avatar.attached?
+    div.col-105.mt-25
+      span= @tweet.user.profile.name
+      i.bi.bi-three-dots.float-end.me-3.text-secondary
+  div.row.gx-0.mt-25.px-3.border-dark
+    span.text-wrap
+      = @tweet.text
+    div.me-2
+      = image_tag @tweet.image, class: 'rounded-4 w-100 my-2' if @tweet.image.attached?
+    span.text-secondary.mt-2= l @tweet.created_at, format: :am_pm_long
+    hr.my-2
+    = turbo_frame_tag 'show_tweet_icons' do
+      = render partial: "tweets/show_tweet_icons", locals: { tweet: @tweet }
+    hr.my-2
+  = render partial: "tweets/reply_tweet", locals: { user: @user }
+  = turbo_frame_tag 'tweets' do
+    = render partial: "tweets/tweets", locals: { tweets: @reply_tweets }

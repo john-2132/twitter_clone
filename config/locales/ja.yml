@@ -183,4 +183,5 @@ ja:
       long: "%Y/%m/%d %H:%M"
       short: "%m/%d %H:%M"
       short_ja: "%Y年%-m月"
+      am_pm_long: "%P%I:%M・%Y年%m月%d日"
     pm: 午後

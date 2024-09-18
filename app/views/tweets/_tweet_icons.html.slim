@@ -1,0 +1,16 @@
+div.d-flex.justify-content-between.align-items-center.me-2
+  = button_to '#', class: 'btn btn-link btn-sm rounded-circle text-secondary chat-icon text-decoration-none'
+    i.bi.bi-chat
+      span.fst-normal
+        = Tweet.reply?(tweet) ? " #{Tweet.reply_tweets(tweet).count}" : ''
+  = button_to '#', class: 'btn btn-link btn-sm rounded-circle text-secondary retweet-icon text-decoration-none'
+    i.bi.bi-repeat
+  = button_to '#', class: 'btn btn-link btn-sm rounded-circle text-secondary favorite-icon text-decoration-none'
+    i.bi.bi-heart
+  = button_to '#', class: 'btn btn-link btn-sm rounded-circle text-secondary analytics-icon text-decoration-none'
+    i.bi.bi-bar-chart-fill
+  div.d-flex
+    = button_to '#', class: 'btn btn-link btn-sm rounded-circle text-secondary bookmark-icon text-decoration-none'
+      i.bi.bi-bookmark
+    = button_to '#', class: 'btn btn-link btn-sm rounded-circle text-secondary upload-icon text-decoration-none'
+      i.bi.bi-upload

@@ -1,0 +1,18 @@
+= turbo_frame_tag "reply_tweet" do
+  div.row.gx-0.border-bottom.border-dark
+    div.col-15.mt-25.text-center
+      = link_to (image_tag user.profile.avatar.variant(resize: '45x45!', gravity: :center), alt: user.profile.avatar.filename.to_s, class: 'rounded-circle' if user.profile.avatar.attached?), profile_path, data: { turbo_frame: '_top' }
+    div.col-105
+      = form_with model: Tweet.new, url: tweet_reply_path, id: 'tweetReturn', local: true do |f|
+        div.row.gx-0
+          .flex_text_area.mt-3
+            div.form-control.flex_text_area_dummy.border-0.rounded-0.fs-5.ps-0 aria-hidden='true'
+              = "&ZeroWidthSpace;"
+            = f.text_area :text, class: 'form-control bg-black text-white border-0 rounded-0 fs-5 ps-0 flex_text_area_input_area text_area_without_focus_outline', placeholder: '返信をポスト'
+        #tweetImageFrame.div.row.gx-0.me-2.position-relative
+        div.row.gx-0
+          div.d-flex.align-items-center.justify-content-between
+            = f.file_field :image, accept: "image/jpg", class: "d-none", for: "tweetReturn"
+            = f.label :image, class: "tweet-image-label"
+              i.bi.bi-image.text-primary
+            button.btn.btn-tweet.rounded-5.w-15.mx-2.my-2 type='submit' form='tweetReturn' 返信

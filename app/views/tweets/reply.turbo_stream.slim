@@ -1,0 +1,8 @@
+= turbo_stream.update "show_tweet_icons"
+  = render partial: "tweets/show_tweet_icons", locals: { tweet: @tweet }
+= turbo_stream.prepend "tweets", @reply_tweet 
+= turbo_stream.update "reply_tweet"
+  = render partial: "tweets/reply_tweet", locals: { user: @user }
+  script
+    | const e_afterStreamRender = new CustomEvent('after-stream-render');
+    | document.dispatchEvent(e_afterStreamRender);

@@ -31,6 +31,26 @@ class TweetsController < ApplicationController
                           .order(created_at: 'DESC').page(params[:page])
   end
 
+  def show
+    @user = current_user
+    @tweet = Tweet.preload(user: { profile: :avatar_attachment }, image_attachment: :blob).find(params[:id])
+    @reply_tweets = Tweet.reply_tweets(@tweet, 'DESC').page(params[:page])
+  end
+
+  def reply # rubocop:disable Hc/RailsSpecificActionName
+    @user = current_user
+    @reply_tweet = @user.tweets.build(tweet_params)
+    @reply_tweet.parent_id = params[:id]
+
+    @tweet = Tweet.preload(user: { profile: :avatar_attachment },
+                           image_attachment: :blob).find(params[:id])
+
+    is_saved = @reply_tweet.save
+    @reply_tweets = Tweet.reply_tweets(@tweet, 'DESC').page(params[:page])
+
+    render :show, status: :unprocessable_entity unless is_saved
+  end
+
   private
 
   def tweet_params

@@ -16,8 +16,8 @@ class Tweet < ApplicationRecord
     Tweet.where(parent_id: tweet.id).count.positive?
   end
 
-  def self.reply_tweets(tweet)
-    Tweet.where(parent_id: tweet.id).preload(user: { profile: :avatar_attachment }).order(created_at: 'ASC')
+  def self.reply_tweets(tweet, order = 'ASC')
+    Tweet.where(parent_id: tweet.id).preload(user: { profile: :avatar_attachment }).order(created_at: order)
   end
 
   def custom_length_validation

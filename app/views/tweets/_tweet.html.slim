@@ -11,4 +11,5 @@
         = tweet.text
       div.me-2
         = image_tag tweet.image, class: 'rounded-4 w-100 my-2' if tweet.image.attached?
-      = render partial: "tweets/tweet_icons", locals: { tweet: tweet }
+      = turbo_frame_tag "tweet_icons_#{tweet.id}" do
+        = render partial: "tweets/tweet_icons", locals: { user: @user, tweet: tweet }

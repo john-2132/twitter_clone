@@ -19,11 +19,15 @@ class User < ApplicationRecord
   has_many :favorites, dependent: :destroy
   has_many :favorite_tweets, through: :favorites, source: :tweet
 
-  def replies_and_retweets(_user_id)
+  def replies_and_retweets
     reply_ids = tweets.select(:parent_id).where.not(parent_id: nil).pluck(:parent_id)
     retweet_ids = retweets.pluck(:tweet_id)
     Tweet.where(id: [*reply_ids, *retweet_ids]).preload(user: { profile: :avatar_attachment },
                                                         image_attachment: :blob).order(created_at: :desc)
+  end
+
+  def favorited_tweet?(tweet_id)
+    favorites.find_by(tweet_id:).present?
   end
 
   # Include default devise modules. Others available are:

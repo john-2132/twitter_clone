@@ -8,4 +8,4 @@
   div.row.gx-0.border-bottom.border-dark
     = render partial: "tweets/new_tweet", locals: { user: @user }
     = turbo_frame_tag 'tweets' do
-      = render partial: "tweets", locals: { tweets: @tweets }
+      = render partial: "tweets", locals: { user: @user, tweets: @tweets }

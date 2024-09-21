@@ -1,4 +1,4 @@
 = turbo_frame_tag "tweets-page-#{tweets.current_page}" do
   - tweets.each do |tweet|
-    = render partial: "tweets/tweet", locals: { tweet: tweet }
+    = render partial: "tweets/tweet", locals: { user: user, tweet: tweet }
   = turbo_frame_tag "tweets-page-#{tweets.next_page}", loading: :lazy, src: path_to_next_page(tweets)

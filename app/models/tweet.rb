@@ -13,7 +13,7 @@ class Tweet < ApplicationRecord
   has_many :replies, class_name: 'Tweet', foreign_key: 'parent_id', inverse_of: :parent_tweet, dependent: :destroy
 
   def self.favorited?(tweet)
-    tweet.favorites.count.positive?
+    tweet.favorites.exists?
   end
 
   def self.favorite_count(tweet)

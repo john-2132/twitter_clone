@@ -27,7 +27,7 @@ class User < ApplicationRecord
   end
 
   def favorited_tweet?(tweet_id)
-    favorites.find_by(tweet_id:).present?
+    favorites.where(tweet_id:).exists?
   end
 
   # Include default devise modules. Others available are:

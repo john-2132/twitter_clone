@@ -2,5 +2,4 @@
 = turbo_stream.update "new_tweet"
   = render partial: "tweets/new_tweet", locals: { user: @user }
   script
-    | const e_afterStreamRender = new CustomEvent('after-stream-render');
-    | document.dispatchEvent(e_afterStreamRender);
+    | document.dispatchEvent(new CustomEvent('after-tweet-render'));

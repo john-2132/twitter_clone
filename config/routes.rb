@@ -16,6 +16,7 @@ Rails.application.routes.draw do
   get 'tweets/folllow', to: 'tweets#follow'
   post 'tweets/post', to: 'tweets#create'
   post 'tweets/:id/reply', to: 'tweets#reply', as: 'tweet_reply'
+  post 'tweets/:id/favorite', to: 'tweets#favorite', as: 'tweet_favorite'
 
   get 'profiles/detail', to: 'profiles#show', as: 'profile'
   get 'profiles/edit', to: 'profiles#edit', as: 'edit_profile'

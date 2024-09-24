@@ -23,7 +23,7 @@ class ProfilesController < ApplicationController
   end
 
   def reply_and_retweet # rubocop:disable Hc/RailsSpecificActionName
-    @replies_and_retweets = @user.replies_and_retweets(@user.id).page(params[:page])
+    @replies_and_retweets = @user.replies_and_retweets.page(params[:page])
   end
 
   def favorite # rubocop:disable Hc/RailsSpecificActionName

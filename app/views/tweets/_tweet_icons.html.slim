@@ -1,16 +1,18 @@
-div.d-flex.justify-content-between.align-items-center.me-2
-  = button_to '#', class: 'btn btn-link btn-sm rounded-circle text-secondary chat-icon text-decoration-none'
+div.d-flex.justify-content-between.align-items-center.me-2.ms-minus-05rem
+  = button_to tweet_detail_path(tweet), class: 'btn btn-link btn-sm rounded-circle text-secondary chat-icon text-decoration-none no-link position-relative', method: :get
     i.bi.bi-chat
-      span.fst-normal
+      span.fst-normal.position-absolute.start-100
         = Tweet.reply?(tweet) ? " #{Tweet.reply_tweets(tweet).count}" : ''
-  = button_to '#', class: 'btn btn-link btn-sm rounded-circle text-secondary retweet-icon text-decoration-none'
+  = button_to '#', class: 'btn btn-link btn-sm rounded-circle text-secondary retweet-icon text-decoration-none no-link'
     i.bi.bi-repeat
-  = button_to '#', class: 'btn btn-link btn-sm rounded-circle text-secondary favorite-icon text-decoration-none'
-    i.bi.bi-heart
-  = button_to '#', class: 'btn btn-link btn-sm rounded-circle text-secondary analytics-icon text-decoration-none'
+  = button_to tweet_favorite_path(tweet), class: "btn btn-link btn-sm rounded-circle text-secondary favorite-icon text-decoration-none no-link position-relative #{@user.favorited_tweet?(tweet.id) ? 'favorited' : ''}"
+    i.bi class="#{@user.favorited_tweet?(tweet.id) ? 'bi-heart-fill' : 'bi-heart'}"
+      span.fst-normal.position-absolute.start-100
+        = Tweet.favorited?(tweet) ? " #{Tweet.favorite_count(tweet)}" : ''
+  = button_to '#', class: 'btn btn-link btn-sm rounded-circle text-secondary analytics-icon text-decoration-none no-link'
     i.bi.bi-bar-chart-fill
-  div.d-flex
-    = button_to '#', class: 'btn btn-link btn-sm rounded-circle text-secondary bookmark-icon text-decoration-none'
+  div.d-flex.float-end
+    = button_to '#', class: 'btn btn-link btn-sm rounded-circle text-secondary bookmark-icon text-decoration-none no-link'
       i.bi.bi-bookmark
-    = button_to '#', class: 'btn btn-link btn-sm rounded-circle text-secondary upload-icon text-decoration-none'
+    = button_to '#', class: 'btn btn-link btn-sm rounded-circle text-secondary upload-icon text-decoration-none no-link'
       i.bi.bi-upload

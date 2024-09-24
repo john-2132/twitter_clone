@@ -51,6 +51,27 @@ class TweetsController < ApplicationController
     render :show, status: :unprocessable_entity unless is_saved
   end
 
+  def favorite # rubocop:disable Hc/RailsSpecificActionName
+    @user = current_user
+    favorite = @user.favorites.find_by(tweet_id: params[:id])
+    if favorite.present?
+      is_updated = favorite.destroy
+    else
+      favorite = @user.favorites.build(tweet_id: params[:id])
+      is_updated = favorite.save
+    end
+
+    if is_updated
+      @tweet = Tweet.preload(user: { profile: :avatar_attachment },
+                             image_attachment: :blob).find(params[:id])
+    else
+      @tweets = Tweet.preload(user: { profile: :avatar_attachment }, image_attachment: :blob)
+                     .where(parent_id: nil)
+                     .order(created_at: 'DESC').page(params[:page])
+      render :index, status: :unprocessable_entity
+    end
+  end
+
   private
 
   def tweet_params

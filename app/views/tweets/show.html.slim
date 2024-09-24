@@ -17,9 +17,9 @@
       = image_tag @tweet.image, class: 'rounded-4 w-100 my-2' if @tweet.image.attached?
     span.text-secondary.mt-2= l @tweet.created_at, format: :am_pm_long
     hr.my-2
-    = turbo_frame_tag 'show_tweet_icons' do
-      = render partial: "tweets/show_tweet_icons", locals: { tweet: @tweet }
+    = turbo_frame_tag "show_tweet_icons_#{@tweet.id}" do
+      = render partial: "tweets/show_tweet_icons", locals: { user: @user, tweet: @tweet }
     hr.my-2
   = render partial: "tweets/reply_tweet", locals: { user: @user }
   = turbo_frame_tag 'tweets' do
-    = render partial: "tweets/tweets", locals: { tweets: @reply_tweets }
+    = render partial: "tweets/tweets", locals: { user: @user, tweets: @reply_tweets }

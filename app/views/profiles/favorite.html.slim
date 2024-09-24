@@ -1,4 +1,4 @@
 = turbo_frame_tag "content" do
   = render partial: "profile"
   = turbo_frame_tag 'tweets' do
-    = render partial: "tweets/tweets", locals: { tweets: @favorite_tweets }
+    = render partial: "tweets/tweets", locals: { user: @user, tweets: @favorite_tweets }

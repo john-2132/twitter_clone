@@ -30,6 +30,10 @@ class User < ApplicationRecord
     favorites.where(tweet_id:).exists?
   end
 
+  def retweeted_tweet?(tweet_id)
+    retweets.where(tweet_id:).exists?
+  end
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,

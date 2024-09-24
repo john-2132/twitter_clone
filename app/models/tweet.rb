@@ -20,6 +20,14 @@ class Tweet < ApplicationRecord
     tweet.favorites.count
   end
 
+  def self.retweeted?(tweet)
+    tweet.retweets.exists?
+  end
+
+  def self.retweet_count(tweet)
+    tweet.retweets.count
+  end
+
   def self.reply?(tweet)
     Tweet.where(parent_id: tweet.id).count.positive?
   end

@@ -3,12 +3,14 @@ div.d-flex.justify-content-between.align-items-center.me-2
     i.bi.bi-chat
       span.fst-normal.position-absolute.start-100
         = Tweet.reply?(tweet) ? " #{Tweet.reply_tweets(tweet).count}" : ''
-  = button_to '#', class: 'btn btn-link btn-sm rounded-circle text-secondary retweet-icon text-decoration-none no-link'
+  = button_to retweet_path(tweet), class: "btn btn-link btn-sm rounded-circle text-secondary retweet-icon text-decoration-none no-link position-relative #{@user.retweeted_tweet?(tweet.id) ? 'retweeted' : ''}"
     i.bi.bi-repeat
+      span.fst-normal.position-absolute.start-100
+        = tweet.retweeted? ? " #{tweet.retweet_count}" : ''
   = button_to tweet_favorite_path(tweet), class: "btn btn-link btn-sm rounded-circle text-secondary favorite-icon text-decoration-none no-link position-relative #{@user.favorited_tweet?(tweet.id) ? 'favorited' : ''}"
     i.bi class="#{@user.favorited_tweet?(tweet.id) ? 'bi-heart-fill' : 'bi-heart'}"
       span.fst-normal.position-absolute.start-100
-        = Tweet.favorited?(tweet) ? " #{Tweet.favorite_count(tweet)}" : ''
+        = tweet.favorited? ? " #{tweet.favorite_count}" : ''
   = button_to '#', class: 'btn btn-link btn-sm rounded-circle text-secondary bookmark-icon text-decoration-none no-link'
     i.bi.bi-bookmark
   = button_to '#', class: 'btn btn-link btn-sm rounded-circle text-secondary upload-icon text-decoration-none no-link'

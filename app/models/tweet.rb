@@ -28,6 +28,14 @@ class Tweet < ApplicationRecord
     retweets.count
   end
 
+  def own?(current_user_id)
+    user_id == current_user_id
+  end
+
+  def user_followed?(follower_id)
+    user.followers.where(id: follower_id).exists?
+  end
+
   def self.reply?(tweet)
     Tweet.where(parent_id: tweet.id).count.positive?
   end

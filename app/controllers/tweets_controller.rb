@@ -62,8 +62,7 @@ class TweetsController < ApplicationController
     end
 
     if is_updated
-      @tweet = Tweet.preload(user: { profile: :avatar_attachment },
-                             image_attachment: :blob).find(params[:id])
+      @tweet = Tweet.preload(user: { profile: :avatar_attachment }, image_attachment: :blob).find(params[:id])
     else
       @tweets = Tweet.preload(user: { profile: :avatar_attachment }, image_attachment: :blob)
                      .where(parent_id: nil)
@@ -85,6 +84,28 @@ class TweetsController < ApplicationController
     if is_updated
       @tweet = Tweet.preload(user: { profile: :avatar_attachment },
                              image_attachment: :blob).find(params[:id])
+    else
+      @tweets = Tweet.preload(user: { profile: :avatar_attachment }, image_attachment: :blob)
+                     .where(parent_id: nil)
+                     .order(created_at: 'DESC').page(params[:page])
+      render :index, status: :unprocessable_entity
+    end
+  end
+
+  def user_follow # rubocop:disable Hc/RailsSpecificActionName
+    @user = current_user
+    follow = @user.active_follows.find_by(followed_id: params[:id])
+    if follow.present?
+      is_updated = follow.destroy
+    else
+      follow = @user.active_follows.build(followed_id: params[:id])
+      is_updated = follow.save
+    end
+
+    if is_updated
+      @tweets = Tweet.preload(user: { profile: :avatar_attachment }, image_attachment: :blob)
+                     .where(user_id: params[:id])
+                     .order(created_at: 'DESC')
     else
       @tweets = Tweet.preload(user: { profile: :avatar_attachment }, image_attachment: :blob)
                      .where(parent_id: nil)

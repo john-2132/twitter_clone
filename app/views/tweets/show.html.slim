@@ -9,7 +9,16 @@
       = image_tag @tweet.user.profile.avatar.variant(resize: '45x45!', gravity: :center), alt: @tweet.user.profile.avatar.filename.to_s, class: 'rounded-circle' if @tweet.user.profile.avatar.attached?
     div.col-105.mt-25
       span= @tweet.user.profile.name
-      i.bi.bi-three-dots.float-end.me-3.text-secondary
+      div.float-end.me-2.btn-group
+        = button_tag type: "button", class: "btn btn-link btn-sm rounded-circle text-secondary tweet-option-icon text-decoration-none no-link dropdown-toggle", "data-bs-toggle" => "dropdown", "data-bs-auto-close" => "true", "aria-expanded" => "false"
+          i.bi.bi-three-dots
+        ul.dropdown-menu.dropdown-menu-black.dropdown-menu-end.w-inherit.border-dark.shadow-lg.drop-down-layer
+          li
+            - if @tweet.own?(@user.id)
+              = button_to '#', method: :post, data: { turbo_method: 'post' }, class: 'dropdown-item no-link'
+                i.bi.bi-trash.fst-normal.text-danger = " 削除"
+            - else
+              = render partial: "tweets/user_follow", locals: { user: @user, tweet: @tweet }
   div.row.gx-0.mt-25.px-3.border-dark
     span.text-wrap
       = @tweet.text

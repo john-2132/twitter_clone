@@ -54,8 +54,8 @@ html.h-100
             = link_to '#', class: 'text-decoration-none mb-auto text-white'
               i.bi.bi-three-dots
                 span.ms-3.fst-normal もっと見る
-          div.w-17em.mb-3
-            button.btn.btn-black.btn-lg.rounded-5.w-100.dropdown-toggle.d-flex.align-items-center.justify-content-between.user-icon.border-0 type="button" data-bs-toggle="dropdown" aria-expanded="false"
+          div.w-17em.mb-3.btn-group
+            button.btn.btn-black.btn-lg.rounded-5.w-100.dropdown-toggle.d-flex.align-items-center.justify-content-between.user-icon.border-0 type="button" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false"
               div.d-flex.align-items-center
                 = image_tag @user.profile.avatar.variant(resize: '45x45!', gravity: :center), alt: @user.profile.avatar.filename.to_s, class: 'rounded-circle' if @user.profile.avatar.attached?
                 span.ps-2.text-white

@@ -33,7 +33,7 @@ class Tweet < ApplicationRecord
   end
 
   def user_followed?(follower_id)
-    user.followers.where(id: follower_id).exists?
+    user.followers.exists?(id: follower_id)
   end
 
   def self.reply?(tweet)

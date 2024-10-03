@@ -27,11 +27,11 @@ class User < ApplicationRecord
   end
 
   def favorited_tweet?(tweet_id)
-    favorites.where(tweet_id:).exists?
+    favorites.exists?(tweet_id:)
   end
 
   def retweeted_tweet?(tweet_id)
-    retweets.where(tweet_id:).exists?
+    retweets.exists?(tweet_id:)
   end
 
   # Include default devise modules. Others available are:

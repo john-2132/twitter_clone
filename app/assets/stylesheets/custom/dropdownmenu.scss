@@ -12,3 +12,7 @@
   --bs-dropdown-link-disabled-color: #adb5bd;
   --bs-dropdown-header-color: #adb5bd;
 }
+
+.drop-down-layer {
+  transform: translate3d(0px, 0px, 0px) !important;
+}

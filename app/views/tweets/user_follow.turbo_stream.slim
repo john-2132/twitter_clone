@@ -1,0 +1,7 @@
+= turbo_stream.update "follows"
+  = render partial: "profiles/follows", locals: { user: @user }
+- @tweets.each do |tweet|
+  = turbo_stream.update "user_follow_#{tweet.id}"
+    = render partial: "tweets/user_follow", locals: { user: @user, tweet: tweet }
+    script
+      | document.dispatchEvent(new CustomEvent('after-follow-render'));

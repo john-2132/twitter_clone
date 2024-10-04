@@ -10,21 +10,22 @@
 }
 
 .retweet-icon:hover {
-  background-color: rgba(var(--bs-dark-rgb), var(--bs-bg-opacity)) !important;
-  color: rgba(#20c997, var(--bs-text-opacity)) !important;
+  background-color: rgba(#0C1A14, var(--bs-bg-opacity)) !important;
+  color: rgba(#00BA7C, var(--bs-text-opacity)) !important;
 }
 
 .favorite-icon:hover {
-  background-color: rgba(var(--bs-dark-rgb), var(--bs-bg-opacity)) !important;
-  color: rgba(#d63384, var(--bs-text-opacity)) !important;
+  background-color: rgba(#210C14, var(--bs-bg-opacity)) !important;
+  color: rgba(#F9197F, var(--bs-text-opacity)) !important;
 }
 
 .analytics-icon:hover,
 .chat-icon:hover,
 .bookmark-icon:hover,
-.upload-icon:hover {
-  background-color: rgba(var(--bs-dark-rgb), var(--bs-bg-opacity)) !important;
-  color: rgba(var(--bs-info-rgb), var(--bs-text-opacity)) !important;
+.upload-icon:hover,
+.tweet-option-icon:hover {
+  background-color: rgba(#0D1720, var(--bs-bg-opacity)) !important;
+  color: rgba(#1C9BEF, var(--bs-text-opacity)) !important;
 }
 
 

@@ -1,0 +1,8 @@
+= turbo_frame_tag "follows" do
+  div.pb-2
+    small 
+      span = user.followings.count
+      span.text-secondary = " フォロー中"
+    small.ms-3
+      span = user.followers.count
+      span.text-secondary = " フォロワー"

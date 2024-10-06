@@ -1,9 +1,9 @@
 = turbo_frame_tag "reply_tweet" do
   div.row.gx-0.border-bottom.border-dark
     div.col-15.mt-25.text-center
-      = link_to (image_tag user.profile.avatar.variant(resize: '45x45!', gravity: :center), alt: user.profile.avatar.filename.to_s, class: 'rounded-circle' if user.profile.avatar.attached?), profile_path, data: { turbo_frame: '_top' }
+      = link_to (image_tag user.profile.avatar.variant(resize: '45x45!', gravity: :center), alt: user.profile.avatar.filename.to_s, class: 'rounded-circle' if user.profile.avatar.attached?), profiles_path, data: { turbo_frame: '_top' }
     div.col-105
-      = form_with model: Tweet.new, url: tweet_reply_path, id: 'tweetReturn', local: true do |f|
+      = form_with model: Tweet.new, url: reply_tweet_path, id: 'tweetReturn', local: true do |f|
         div.row.gx-0
           .flex_text_area.mt-3
             div.form-control.flex_text_area_dummy.border-0.rounded-0.fs-5.ps-0 aria-hidden='true'

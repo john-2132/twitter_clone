@@ -1,4 +1,4 @@
-= link_to tweet_detail_path(tweet), class: 'text-decoration-none text-white', data: { turbo_frame: "content", turbo_action: :advance }
+= link_to tweet_path(tweet), class: 'text-decoration-none text-white', data: { turbo_frame: "content", turbo_action: :advance }
   div.row.gx-0.border-bottom.border-dark
     div.col-15.mt-25.text-center
       = image_tag tweet.user.profile.avatar.variant(resize: '45x45!', gravity: :center), alt: tweet.user.profile.avatar.filename.to_s, class: 'rounded-circle' if tweet.user.profile.avatar.attached?

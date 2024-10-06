@@ -24,7 +24,6 @@
       const avatarImage = document.getElementById('avatarImage');
       const avatarImageWidth = avatarImage.offsetWidth;
       const avatarImageHeight = avatarImage.offsetHeight;
-      console.log(avatarImageWidth, avatarImageHeight);
       avatarImage.src = blob;
       avatarImage.width = avatarImageWidth;
       avatarImage.height = avatarImageHeight;

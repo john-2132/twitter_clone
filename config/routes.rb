@@ -11,18 +11,16 @@ Rails.application.routes.draw do
 
   root 'tweets#index'
 
-  get 'tweets', to: 'tweets#index'
-  get 'tweets/folllow', to: 'tweets#follow'
-  get 'tweets/:id', to: 'tweets#show', as: 'tweet_detail'
-  post 'tweets/post', to: 'tweets#create'
-  post 'tweets/:id/reply', to: 'tweets#reply', as: 'tweet_reply'
-  post 'tweets/:id/retweet', to: 'tweets#retweet', as: 'retweet'
-  post 'tweets/:id/favorite', to: 'tweets#favorite', as: 'tweet_favorite'
-  post 'tweets/:id/user_follow', to: 'tweets#user_follow', as: 'tweet_user_follow'
+  resources :tweets, only: %i[index show create] do
+    get 'follow', on: :collection
+    post 'reply', on: :member
+    resources :retweets, shallow: true, only: %i[create destroy]
+    resources :favorites, shallow: true, only: %i[create destroy]
+    resources :follows, shallow: true, only: %i[create destroy]
+  end
 
-  get 'profiles/detail', to: 'profiles#show', as: 'profile'
-  get 'profiles/edit', to: 'profiles#edit', as: 'edit_profile'
-  get 'profiles/reply_and_retweet', to: 'profiles#reply_and_retweet', as: 'reply'
-  get 'profiles/favorite', to: 'profiles#favorite', as: 'favorite'
-  post 'profiles/update', to: 'profiles#update', as: 'update_profile'
+  resource :profiles, only: %i[show edit update] do
+    get 'reply_and_retweet', on: :collection, to: 'profiles#reply_and_retweet'
+    get 'favorite', on: :collection, to: 'profiles#favorite'
+  end
 end

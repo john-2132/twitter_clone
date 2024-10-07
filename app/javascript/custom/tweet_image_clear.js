@@ -1,5 +1,4 @@
 document.addEventListener('tweetImagePreviewed', () => {
-  console.log('common baby!!');
   const tweetImageClear = document.getElementById('tweetImageClear');
 
   if (tweetImageClear == null) {

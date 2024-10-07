@@ -2,7 +2,7 @@
   .h-header.position-fixed.top-0.z-5.w-center-content
     = link_to tweets_path, id: 'recommendBtn', class: 'w-50 h-100 btn btn-black text-secondary align-content-center tweet-type rounded-0 selected-100', data: { turbo_frame: "tweets" }
       span.fst-normal おすすめ
-    = link_to tweets_folllow_path, id: 'followingBtn', class: 'w-50 h-100 btn btn-black text-secondary align-content-center tweet-type rounded-0', data: { turbo_frame: "tweets" }
+    = link_to follow_tweets_path, id: 'followingBtn', class: 'w-50 h-100 btn btn-black text-secondary align-content-center tweet-type rounded-0', data: { turbo_frame: "tweets" }
       span.fst-normal フォロー中
     .underline
   div.row.gx-0.border-bottom.border-dark

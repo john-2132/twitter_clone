@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_09_30_131538) do
+ActiveRecord::Schema[7.0].define(version: 2024_10_05_153644) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -47,6 +47,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_09_30_131538) do
     t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["tweet_id", "user_id"], name: "index_favorites_on_tweet_id_and_user_id", unique: true
     t.index ["tweet_id"], name: "index_favorites_on_tweet_id"
     t.index ["user_id"], name: "index_favorites_on_user_id"
   end
@@ -57,6 +58,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_09_30_131538) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["followed_id"], name: "index_follows_on_followed_id"
+    t.index ["follower_id", "followed_id"], name: "index_follows_on_follower_id_and_followed_id", unique: true
     t.index ["follower_id"], name: "index_follows_on_follower_id"
   end
 
@@ -78,6 +80,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_09_30_131538) do
     t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["tweet_id", "user_id"], name: "index_retweets_on_tweet_id_and_user_id", unique: true
     t.index ["tweet_id"], name: "index_retweets_on_tweet_id"
     t.index ["user_id"], name: "index_retweets_on_user_id"
   end

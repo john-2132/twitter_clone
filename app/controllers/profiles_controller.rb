@@ -16,7 +16,7 @@ class ProfilesController < ApplicationController
     @profile.avatar.purge if params[:profile][:avatar_id]
     @profile.header.purge if params[:profile][:header_id]
     if @profile.update(profile_params)
-      redirect_to profile_path
+      redirect_to profiles_path
     else
       render :edit, status: :unprocessable_entity
     end

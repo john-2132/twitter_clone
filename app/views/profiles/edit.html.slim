@@ -8,7 +8,7 @@
         = @profile.name
     div.ms-auto.me-2
       button.btn.btn-light.rounded-5.w-100 type='submit' form='updateProfile' 保存
-  = form_with model: Profile.new, url: update_profile_path, id: 'updateProfile', data: {turbo_frame: 'content', turbo_action: :advance}, local: true do |f|
+  = form_with model: Profile.new, url: profiles_path, method: :patch, id: 'updateProfile', data: {turbo_frame: 'content', turbo_action: :advance}, local: true do |f|
     div.w-100.position-relative
       = image_tag @profile.header.variant(resize: '600x200!', gravity: :center), alt: @profile.header.filename.to_s, class: 'w-100 z-1', id: 'headerImage'
       div.position-header-edit.z-2

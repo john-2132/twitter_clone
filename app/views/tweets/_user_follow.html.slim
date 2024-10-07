@@ -1,6 +1,7 @@
 = turbo_frame_tag "user_follow_#{tweet.id}" do
-  = button_to tweet_user_follow_path(tweet.user_id), method: :post, data: { turbo_method: 'post' }, class: 'dropdown-item no-link'
-    - if tweet.user_followed?(user.id)
+  - if tweet.user_followed?(user.id)
+    = button_to follow_path(tweet.user_id), method: :delete, data: { turbo_method: 'delete' }, class: 'dropdown-item no-link'
       i.bi.bi-person-x.fst-normal = " #{tweet.user.profile.name}さんをフォローを解除"
-    - else
+  - else
+    = button_to tweet_follows_path(tweet.user_id), method: :post, data: { turbo_method: 'post' }, class: 'dropdown-item no-link'
       i.bi.bi-person-plus.fst-normal = " #{tweet.user.profile.name}さんをフォロー"

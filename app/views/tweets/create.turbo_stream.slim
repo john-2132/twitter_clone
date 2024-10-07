@@ -1,4 +1,5 @@
-= turbo_stream.prepend "tweets", @tweet 
+= turbo_stream.prepend "tweets"
+  = render partial: "tweets/tweet", locals: { user: @user, tweet: @tweet }
 = turbo_stream.update "new_tweet"
   = render partial: "tweets/new_tweet", locals: { user: @user }
   script

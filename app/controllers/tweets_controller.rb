@@ -26,9 +26,11 @@ class TweetsController < ApplicationController
 
   def follow # rubocop:disable Hc/RailsSpecificActionName
     @user = current_user
-    @follow_tweets = Tweet.preload(user: { profile: :avatar_attachment }, image_attachment: :blob)
-                          .where(user_id: @user.followings).where(parent_id: nil)
-                          .order(created_at: 'DESC').page(params[:page])
+    @follow_tweets = Tweet.where(user_id: @user.followings + [@user.id])
+                          .where(parent_id: nil)
+                          .order(created_at: :desc)
+                          .preload(user: { profile: :avatar_attachment }, image_attachment: :blob)
+                          .page(params[:page])
   end
 
   def show
@@ -49,69 +51,6 @@ class TweetsController < ApplicationController
     @reply_tweets = Tweet.reply_tweets(@tweet, 'DESC').page(params[:page])
 
     render :show, status: :unprocessable_entity unless is_saved
-  end
-
-  def retweet # rubocop:disable Hc/RailsSpecificActionName
-    @user = current_user
-    retweet = @user.retweets.find_by(tweet_id: params[:id])
-    if retweet.present?
-      is_updated = retweet.destroy
-    else
-      retweet = @user.retweets.build(tweet_id: params[:id])
-      is_updated = retweet.save
-    end
-
-    if is_updated
-      @tweet = Tweet.preload(user: { profile: :avatar_attachment }, image_attachment: :blob).find(params[:id])
-    else
-      @tweets = Tweet.preload(user: { profile: :avatar_attachment }, image_attachment: :blob)
-                     .where(parent_id: nil)
-                     .order(created_at: 'DESC').page(params[:page])
-      render :index, status: :unprocessable_entity
-    end
-  end
-
-  def favorite # rubocop:disable Hc/RailsSpecificActionName
-    @user = current_user
-    favorite = @user.favorites.find_by(tweet_id: params[:id])
-    if favorite.present?
-      is_updated = favorite.destroy
-    else
-      favorite = @user.favorites.build(tweet_id: params[:id])
-      is_updated = favorite.save
-    end
-
-    if is_updated
-      @tweet = Tweet.preload(user: { profile: :avatar_attachment },
-                             image_attachment: :blob).find(params[:id])
-    else
-      @tweets = Tweet.preload(user: { profile: :avatar_attachment }, image_attachment: :blob)
-                     .where(parent_id: nil)
-                     .order(created_at: 'DESC').page(params[:page])
-      render :index, status: :unprocessable_entity
-    end
-  end
-
-  def user_follow # rubocop:disable Hc/RailsSpecificActionName
-    @user = current_user
-    follow = @user.active_follows.find_by(followed_id: params[:id])
-    if follow.present?
-      is_updated = follow.destroy
-    else
-      follow = @user.active_follows.build(followed_id: params[:id])
-      is_updated = follow.save
-    end
-
-    if is_updated
-      @tweets = Tweet.preload(user: { profile: :avatar_attachment }, image_attachment: :blob)
-                     .where(user_id: params[:id])
-                     .order(created_at: 'DESC')
-    else
-      @tweets = Tweet.preload(user: { profile: :avatar_attachment }, image_attachment: :blob)
-                     .where(parent_id: nil)
-                     .order(created_at: 'DESC').page(params[:page])
-      render :index, status: :unprocessable_entity
-    end
   end
 
   private

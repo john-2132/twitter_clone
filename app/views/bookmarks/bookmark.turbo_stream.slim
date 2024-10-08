@@ -1,0 +1,6 @@
+= turbo_stream.update "show_tweet_icons_#{@tweet.id}"
+  = render partial: "tweets/show_tweet_icons", locals: { user: @user, tweet: @tweet }
+= turbo_stream.update "tweet_icons_#{@tweet.id}"
+  = render partial: "tweets/tweet_icons", locals: { user: @user, tweet: @tweet }
+  script
+    | document.dispatchEvent(new CustomEvent('after-bookmark-render'));

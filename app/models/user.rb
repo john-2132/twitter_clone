@@ -19,6 +19,9 @@ class User < ApplicationRecord
   has_many :favorites, dependent: :destroy
   has_many :favorite_tweets, through: :favorites, source: :tweet
 
+  has_many :bookmarks, dependent: :destroy
+  has_many :bookmark_tweets, through: :bookmarks, source: :tweet
+
   def replies_and_retweets
     reply_ids = tweets.select(:parent_id).where.not(parent_id: nil).pluck(:parent_id)
     retweet_ids = retweets.pluck(:tweet_id)
@@ -32,6 +35,10 @@ class User < ApplicationRecord
 
   def retweeted_tweet?(tweet_id)
     retweets.exists?(tweet_id:)
+  end
+
+  def bookmarked_tweet?(tweet_id)
+    bookmarks.exists?(tweet_id:)
   end
 
   # Include default devise modules. Others available are:

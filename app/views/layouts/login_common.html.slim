@@ -4,6 +4,7 @@ html.h-100
     meta content="text/html; charset=UTF-8" http-equiv="Content-Type"
     title Myapp
     meta content="width=device-width,initial-scale=1" name="viewport"
+    meta name="turbo-cache-control" content="no-cache"
     = csrf_meta_tags
     = csp_meta_tag
     = stylesheet_link_tag "application", "data-turbo-track": "reload"
@@ -39,7 +40,7 @@ html.h-100
               i.bi.bi-envelope
                 span.ms-3.fst-normal メッセージ
           div.mb-4.h4
-            = link_to '#', class: 'text-decoration-none mb-2 text-white'
+            = link_to bookmarks_path, class: "text-decoration-none mb-2 text-white #{'selected-sidemenu' if current_page?(bookmarks_path)}"
               i.bi.bi-bookmark
                 span.ms-3.fst-normal ブックマーク
           div.mb-4.h4

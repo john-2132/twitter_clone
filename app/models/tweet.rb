@@ -5,6 +5,7 @@ class Tweet < ApplicationRecord
   belongs_to :user
   has_many :retweets, dependent: :destroy
   has_many :favorites, dependent: :destroy
+  has_many :bookmarks, dependent: :destroy
 
   validates :text, presence: true
   validate :custom_length_validation
@@ -26,6 +27,10 @@ class Tweet < ApplicationRecord
 
   def retweet_count
     retweets.count
+  end
+
+  def bookmarked?
+    bookmarks.exists?
   end
 
   def own?(current_user_id)

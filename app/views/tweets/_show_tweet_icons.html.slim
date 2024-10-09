@@ -26,7 +26,12 @@ div.d-flex.justify-content-between.align-items-center.me-2
         span.fst-normal.position-absolute.start-100
           = tweet.favorited? ? " #{tweet.favorite_count}" : ''
 
-  = button_to '#', class: 'btn btn-link btn-sm rounded-circle text-secondary bookmark-icon text-decoration-none no-link'
-    i.bi.bi-bookmark
+  - if @user.bookmarked_tweet?(tweet.id)
+    = button_to bookmark_path(tweet), method: :delete, class: 'btn btn-link btn-sm rounded-circle text-secondary bookmark-icon text-decoration-none no-link bookmarked'
+      i.bi.bi-bookmark-fill
+  - else
+    = button_to tweet_bookmarks_path(tweet), class: 'btn btn-link btn-sm rounded-circle text-secondary bookmark-icon text-decoration-none no-link'
+      i.bi.bi-bookmark
+
   = button_to '#', class: 'btn btn-link btn-sm rounded-circle text-secondary upload-icon text-decoration-none no-link'
     i.bi.bi-upload

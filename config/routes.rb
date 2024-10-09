@@ -17,7 +17,10 @@ Rails.application.routes.draw do
     resources :retweets, shallow: true, only: %i[create destroy]
     resources :favorites, shallow: true, only: %i[create destroy]
     resources :follows, shallow: true, only: %i[create destroy]
+    resources :bookmarks, shallow: true, only: %i[create destroy]
   end
+
+  resources :bookmarks, only: :index
 
   resource :profiles, only: %i[show edit update] do
     get 'reply_and_retweet', on: :collection, to: 'profiles#reply_and_retweet'

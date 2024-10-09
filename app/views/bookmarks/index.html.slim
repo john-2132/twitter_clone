@@ -1,0 +1,18 @@
+= turbo_frame_tag 'content', data: { turbo_action: :advance } do
+  .h-header.position-fixed.top-0.z-5.w-center-content.d-flex.align-items-center.justify-content-between
+    div.d-flex.flex-column.ms-3
+      div.fs-4 ブックマーク
+      small class="text-secondary"
+        = @user.profile.name
+    div.me-2
+      .btn-group
+        = button_tag type: "button", class: "btn btn-link btn-sm rounded-circle text-secondary tweet-option-icon text-decoration-none no-link dropdown-toggle", "data-bs-toggle" => "dropdown", "data-bs-auto-close" => "true", "aria-expanded" => "false"
+          i.bi.bi-three-dots
+        ul.dropdown-menu.dropdown-menu-black.dropdown-menu-end.w-inherit.border-dark.shadow-lg.drop-down-layer-center
+          li
+            = button_to '#', method: :post, data: { turbo_method: 'post' }, class: 'dropdown-item no-link'
+              span.text-danger.fw-bolder ブックマークをすべて削除
+                
+  div.row.gx-0.border-bottom.border-dark
+    = turbo_frame_tag 'tweets' do
+      = render partial: "tweets/tweets", locals: { user: @user, tweets: @bookmark_tweets }

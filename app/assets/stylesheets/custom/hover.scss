@@ -28,7 +28,22 @@
   color: rgba(#1C9BEF, var(--bs-text-opacity)) !important;
 }
 
-
 .image-icon:hover {
   background-color: rgba(var(--bs-dark-rgb), var(--bs-bg-opacity)) !important;
+}
+
+.gear-icon:hover,
+.dm-icon:hover {
+  background-color: rgba(#181919, var(--bs-bg-opacity)) !important;
+}
+
+.message:hover {
+  background-color: rgba(#16181C, var(--bs-bg-opacity)) !important;
+}
+
+.message-image-icon:hover,
+.gif-icon:hover,
+.smile-icon:hover,
+.send-icon:hover {
+  background-color: rgba(#242F3C, var(--bs-bg-opacity)) !important;
 }

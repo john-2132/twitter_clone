@@ -1,0 +1,5 @@
+- if message_room.latest_message.present?
+  span.text-secondary.ms-2= time_ago_in_words(message_room.latest_message.created_at)
+  br
+  span.text-wrap
+    = message_room.latest_message.text

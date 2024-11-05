@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_10_07_122821) do
+ActiveRecord::Schema[7.0].define(version: 2024_10_15_143749) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -72,6 +72,22 @@ ActiveRecord::Schema[7.0].define(version: 2024_10_07_122821) do
     t.index ["follower_id"], name: "index_follows_on_follower_id"
   end
 
+  create_table "message_rooms", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "messages", force: :cascade do |t|
+    t.text "text"
+    t.bigint "user_id", null: false
+    t.uuid "message_room_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["message_room_id"], name: "index_messages_on_message_room_id"
+    t.index ["user_id"], name: "index_messages_on_user_id"
+    t.check_constraint "(char_length(regexp_replace(text, '[\\u0000-\\u007F]'::text, ''::text, 'g'::text)) * 2 + char_length(regexp_replace(text, '[^\\u0000-\\u007F]'::text, ''::text, 'g'::text))) <= 10000", name: "text_length_check"
+  end
+
   create_table "profiles", force: :cascade do |t|
     t.string "name", default: "", null: false
     t.date "birth_date", default: "1930-01-01", null: false
@@ -93,6 +109,15 @@ ActiveRecord::Schema[7.0].define(version: 2024_10_07_122821) do
     t.index ["tweet_id", "user_id"], name: "index_retweets_on_tweet_id_and_user_id", unique: true
     t.index ["tweet_id"], name: "index_retweets_on_tweet_id"
     t.index ["user_id"], name: "index_retweets_on_user_id"
+  end
+
+  create_table "room_participants", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "message_room_id", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["message_room_id"], name: "index_room_participants_on_message_room_id"
+    t.index ["user_id"], name: "index_room_participants_on_user_id"
   end
 
   create_table "tasks", force: :cascade do |t|
@@ -151,9 +176,13 @@ ActiveRecord::Schema[7.0].define(version: 2024_10_07_122821) do
   add_foreign_key "favorites", "users"
   add_foreign_key "follows", "users", column: "followed_id", name: "followed_id"
   add_foreign_key "follows", "users", column: "follower_id", name: "follower_id"
+  add_foreign_key "messages", "message_rooms"
+  add_foreign_key "messages", "users"
   add_foreign_key "profiles", "users"
   add_foreign_key "retweets", "tweets"
   add_foreign_key "retweets", "users"
+  add_foreign_key "room_participants", "message_rooms"
+  add_foreign_key "room_participants", "users"
   add_foreign_key "tweets", "tweets", column: "parent_id"
   add_foreign_key "tweets", "users"
 end

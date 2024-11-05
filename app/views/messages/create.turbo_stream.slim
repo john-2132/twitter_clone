@@ -1,0 +1,4 @@
+= turbo_stream.replace "new_message"
+  = render partial: "messages/new_message", locals: { message_room: @message_room }
+  script
+    | document.dispatchEvent(new CustomEvent('after-message-render'));

@@ -16,11 +16,11 @@ html.h-100
           = link_to tweets_path, class: "text-decoration-none text-white"
             i class="bi bi-twitter"
               span.ms-2.fst-normal Twitter
-      div.col-45.border.border-dark.text-white.border-top-0
-      div.col-4.text-white.my-auto
+      div.border.border-dark.text-white.border-top-0 class=(request.path.include?('message') ? 'col-35' : 'col-45')
+      div.text-white.my-auto class=(request.path.include?('message') ? 'col-5' : 'col-4')
         div.float-end
           = link_to "ログアウト", destroy_user_session_path, method: :delete, data: { turbo_method: 'delete' }, class: 'btn btn-outline-primary me-9'
-    div.row.h-remain.gx-0
+    div.row.h-remain.gx-0.d-flex
       div.col-35.bg-black.text-white.overflow-scroll.card.h-remain.rounded-0.position-fixed.top-header-bottom.z-3
         div.d-flex.align-items-start.flex-column.ms-9.bg-black.h-100
           div.my-4.h4
@@ -36,7 +36,7 @@ html.h-100
               i.bi.bi-bell
                 span.ms-3.fst-normal 通知
           div.mb-4.h4
-            = link_to '#', class: 'text-decoration-none mb-2 text-white'
+            = link_to message_rooms_path, class: "text-decoration-none mb-2 text-white #{'selected-sidemenu' if request.path.include?('message_room')}"
               i.bi.bi-envelope
                 span.ms-3.fst-normal メッセージ
           div.mb-4.h4
@@ -65,8 +65,5 @@ html.h-100
             ul.dropdown-menu.dropdown-menu-black.text-center.w-inherit.border-dark.shadow-lg
               li
                 = link_to "#{@user.profile.name}からログアウト", destroy_user_session_path, method: :delete, data: { turbo_method: 'delete' }, class: 'dropdown-item'
-      div.col-45.bg-black.border.border-dark.text-white.border-top-0.ms-col-35.position-relative.top-header-bottom
-        = yield
-      div.col-4.bg-black.text-white.position-relative.top-header-bottom
-        プロモーション
-        = render partial: "layouts/flash"
+      = yield
+    = turbo_frame_tag 'modal'

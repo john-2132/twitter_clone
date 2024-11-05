@@ -1,0 +1,11 @@
+= link_to message_room_messages_path(message_room), class: "text-decoration-none text-white", data: { turbo_frame: "sub_content", turbo_action: :advance }
+  = turbo_frame_tag "message-room-#{message_room.id}" do
+    div.row.gx-0.pb-25.message class="#{'selected-message-room' if request.path.include?(message_room.id)}"
+      div.col-15.mt-25.text-center
+        - message_room.other_users(user).each do |other_user|
+          = image_tag other_user.profile.avatar.variant(resize: '45x45!', gravity: :center), alt: other_user.profile.avatar.filename.to_s, class: 'rounded-circle' if other_user.profile.avatar.attached?
+      div.col-105.mt-25
+        - message_room.other_users(user).each do |other_user|
+          span= other_user.profile.name
+        = turbo_frame_tag "latest-message-#{message_room.id}"
+          = render partial: "message_rooms/latest_message", locals: { message_room: message_room }

@@ -22,7 +22,7 @@ div.col-35.bg-black.border.border-dark.text-white.border-top-0.ms-col-35.positio
 div.col-5.bg-black.text-white.position-relative.top-header-bottom.scroll-block
   = turbo_frame_tag 'sub_content' do
     div.d-flex.flex-column.h-vh-remain
-      .h-header.position-fixed.top-0.z-5.w-center-content-message.d-flex.align-items-center.justify-content-between
+      .h-header.position-fixed.top-0.z-5.w-center-content-message.d-flex.align-items-center.justify-content-between.w-fit-content
         div.d-flex.ms-3
           - @message_room.other_users(@user).each do |other_user|
             = image_tag other_user.profile.avatar.variant(resize: '35x35!', gravity: :center), alt: other_user.profile.avatar.filename.to_s, class: 'rounded-circle' if other_user.profile.avatar.attached?

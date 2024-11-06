@@ -4,7 +4,7 @@ class MessageRoomsController < ApplicationController
   before_action :authenticate_user!
   def index
     @user = current_user
-    @message_rooms = @user.message_rooms.page(params[:page])
+    @message_rooms = @user.message_rooms.ordered_by_latest_message.page(params[:page])
   end
 
   def show; end

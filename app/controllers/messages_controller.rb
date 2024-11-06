@@ -5,7 +5,7 @@ class MessagesController < ApplicationController
 
   def index
     @user = current_user
-    @message_rooms = @user.message_rooms.page(params[:page])
+    @message_rooms = @user.message_rooms.ordered_by_latest_message.page(params[:page])
     @message_room = MessageRoom.find(params[:message_room_id])
     @messages = Message.where(message_room_id: params[:message_room_id]).order(:created_at).page(params[:page])
   end

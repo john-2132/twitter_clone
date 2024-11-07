@@ -19,10 +19,10 @@ class MessagesController < ApplicationController
                                    target: 'messages',
                                    partial: 'messages/message',
                                    locals: { user: @user, message: @message }
-      @message_room.broadcast_replace_to 'message-rooms',
-                                         target: "latest-message-#{@message_room.id}",
-                                         partial: 'message_rooms/latest_message',
-                                         locals: { message_room: @message_room }
+      @message_room.broadcast_update_to 'message-rooms',
+                                        target: "latest-message-#{@message_room.id}",
+                                        partial: 'message_rooms/latest_message',
+                                        locals: { message_room: @message_room }
     else
       @message_room = MessageRoom.find(params[:message_room_id])
       @message_rooms = @user.message_rooms.page(params[:page])

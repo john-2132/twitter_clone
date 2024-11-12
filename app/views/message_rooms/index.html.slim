@@ -1,0 +1,26 @@
+div.col-35.bg-black.border.border-dark.text-white.border-top-0.ms-col-35.position-relative.top-header-bottom
+  = turbo_stream_from "message-rooms"
+  = turbo_frame_tag 'main_content', data: { turbo_action: :advance } do
+    .h-header.position-fixed.top-0.z-5.w-center-content-message.d-flex.align-items-center.justify-content-between
+      div.d-flex.flex-column.ms-3
+        div.fs-4 メッセージ
+      div.me-2
+        .btn-group
+          = button_tag type: "button", class: "btn btn-link rounded-circle text-secondary tweet-option-icon text-decoration-none no-link gear-icon"
+            i.bi.bi-gear.text-white
+          = button_tag type: "button", class: "btn btn-link rounded-circle text-secondary tweet-option-icon text-decoration-none no-link dm-icon"
+            i.bi.bi-envelope-plus.text-white
+
+    div.row.gx-0
+      = turbo_frame_tag "message-rooms-page-#{@message_rooms.current_page}" do
+        - @message_rooms.each do |message_room|
+          = render partial: "message_rooms/message_room", locals: { user: @user, message_room: message_room }
+        = turbo_frame_tag "message-rooms-page-#{@message_rooms.next_page}", loading: :lazy, src: path_to_next_page(@message_rooms)
+
+div.col-5.bg-black.text-white.position-relative.top-header-bottom
+  = turbo_frame_tag 'sub_content' do
+      div.position-absolute.top-50.start-50.translate-middle.w-50
+        .fs-3.fw-bold.fst-normal = "メッセージを選択"
+        .fs-6.text-secondary = "既存の会話から選択したり、新しい会話を開始したりできます。"
+        = link_to new_message_room_path, class: 'button btn btn-tweet rounded-5 px-4 py-25 mt-4 text-white fw-bold', data: { turbo_frame: 'modal' }
+          = '新しいメッセージ'

@@ -1,0 +1,15 @@
+= turbo_frame_tag "new_message" do
+  = form_with model: Message.new(message_room_id: message_room.id), url: message_room_messages_path, id: 'messagePost', local: true do |f|
+    div.bg-message.rounded-pill.my-2.mx-3.mh-45px.d-flex
+      = button_tag '#', class: "btn btn-link btn-sm rounded-circle text-secondary message-image-icon text-decoration-none mx-1 my-2"
+        i.bi.bi-image.text-primary
+      = button_tag '#', class: "btn btn-link btn-sm rounded-circle text-secondary gif-icon text-decoration-none mx-1 my-2"
+        i.bi.bi-filetype-gif.text-primary
+      = button_tag '#', class: "btn btn-link btn-sm rounded-circle text-secondary smile-icon text-decoration-none mx-1 my-2"
+        i.bi.bi-emoji-smile.text-primary
+      .flex_text_area.ms-3.w-70
+        div.form-control.flex_text_area_dummy.border-0.rounded-0.fs-6.ps-0.align-content-center aria-hidden='true'
+          = "&ZeroWidthSpace;"
+        = f.text_area :text, class: 'form-control text-white border-0 rounded-0 fs-6 ps-0 flex_text_area_input_area text_area_without_focus_outline align-content-center', placeholder: '新しいメッセージを作成'
+      button.btn.btn-link.btn-sm.rounded-circle.text-secondary.send-icon.text-decoration-none.mx-1.my-2 type='submit' form='messagePost'
+        i.bi.bi-send.text-primary

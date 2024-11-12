@@ -3,6 +3,17 @@
   --bs-btn-hover-bg: #1d9cf0d3;
 }
 
+
+.btn-next-disable,
+.btn-next-disable:hover {
+  background-color: #777A7A;
+}
+
+.btn-next-enable,
+.btn-next-enable:hover {
+  background-color: #D7DBDC;
+}
+
 .file-upload-label {
   display: inline-block;
   cursor: pointer;

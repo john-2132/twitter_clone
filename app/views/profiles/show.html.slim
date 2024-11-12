@@ -1,4 +1,10 @@
-= turbo_frame_tag "content" do
-  = render partial: "profile"
-  = turbo_frame_tag 'tweets' do
-    = render partial: "tweets/tweets", locals: { user: @user, tweets: @own_tweets }
+div.col-45.bg-black.border.border-dark.text-white.border-top-0.ms-col-35.position-relative.top-header-bottom
+  = turbo_frame_tag 'main_content', data: { turbo_action: :advance } do
+    = render partial: "profile"
+    = turbo_frame_tag 'tweets' do
+      = render partial: "tweets/tweets", locals: { user: @user, tweets: @own_tweets }
+
+div.col-4.bg-black.text-white.position-relative.top-header-bottom
+  = turbo_frame_tag 'sub_content' do
+    プロモーション
+    = render partial: "layouts/flash"

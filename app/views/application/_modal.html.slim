@@ -1,0 +1,14 @@
+= turbo_frame_tag "modal" do
+  .modal.fade data-controller="modal"
+    .modal-dialog
+      .modal-content.bg-black
+        .modal-header
+          div.modal-title.text-white.d-flex.align-items-center.w-100
+            div.d-flex.align-items-center.flex-grow-1
+              button.btn-sm.btn-close.btn-close-white.mx-0 type="button" data-bs-dismiss="modal" aria-label="Close"
+              span.fs-4.ms-3 = title
+            div.ms-auto
+              = button_tag message_rooms_path, method: :post, class: 'button btn btn-sm btn-next-disable rounded-5 px-4 py-25 text-white fw-bold'
+                | 次へ
+        .modal-body.text-white
+          = yield

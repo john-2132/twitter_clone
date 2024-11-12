@@ -22,6 +22,14 @@ class User < ApplicationRecord
   has_many :bookmarks, dependent: :destroy
   has_many :bookmark_tweets, through: :bookmarks, source: :tweet
 
+  has_many :sent_messages, class_name: 'Message', foreign_key: 'from_id', inverse_of: :sender, dependent: :destroy
+  has_many :received_messages, class_name: 'Message', foreign_key: 'to_id', inverse_of: :receiver, dependent: :destroy
+
+  has_many :room_participants, dependent: :destroy
+  has_many :message_rooms, through: :room_participants
+
+  has_many :messages, dependent: :destroy
+
   def replies_and_retweets
     reply_ids = tweets.select(:parent_id).where.not(parent_id: nil).pluck(:parent_id)
     retweet_ids = retweets.pluck(:tweet_id)

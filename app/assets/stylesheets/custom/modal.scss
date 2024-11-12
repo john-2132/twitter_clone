@@ -1,0 +1,47 @@
+#recipient-container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+#selected-recipients {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+#recipient-input {
+  flex: 1;
+  min-width: 200px;
+  margin-left: 5px;
+  transition: width 0.2s; /* 幅の変更にアニメーションを追加 */
+  height: 36px; /* 縦幅を固定 */
+}
+
+#suggestions {
+  max-height: 200px;
+  overflow-y: auto;
+  border: 1px solid #ccc;
+  background: white;
+  z-index: 1000;
+  display: none;
+  position: absolute;
+}
+
+.suggestion-item {
+  padding: 8px;
+  cursor: pointer;
+}
+
+.suggestion-item:hover,
+.suggestion-item.selected {
+  background-color: #f0f0f0;
+}
+
+.recipient-item {
+  display: flex;
+  align-items: center;
+  padding: 5px;
+  background-color: #e0e0e0;
+}

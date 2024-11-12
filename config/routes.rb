@@ -22,6 +22,10 @@ Rails.application.routes.draw do
 
   resources :bookmarks, only: :index
 
+  resources :message_rooms, only: %i[index show new create] do
+    resources :messages, shallow: true, only: %i[index create]
+  end
+
   resource :profiles, only: %i[show edit update] do
     get 'reply_and_retweet', on: :collection, to: 'profiles#reply_and_retweet'
     get 'favorite', on: :collection, to: 'profiles#favorite'

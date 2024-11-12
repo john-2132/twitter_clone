@@ -1,0 +1,38 @@
+= turbo_stream_from "message-rooms"
+= turbo_stream_from "message-room-#{@message_room.id}"
+div.col-35.bg-black.border.border-dark.text-white.border-top-0.ms-col-35.position-relative.top-header-bottom.scroll-block
+  = turbo_frame_tag 'main_content', data: { turbo_action: :advance } do
+    .h-header.position-fixed.top-0.z-5.w-center-content-message.d-flex.align-items-center.justify-content-between
+      div.d-flex.flex-column.ms-3
+        div.fs-4 メッセージ
+      div.me-2
+        .btn-group
+          = button_tag type: "button", class: "btn btn-link rounded-circle text-secondary tweet-option-icon text-decoration-none no-link gear-icon"
+            i.bi.bi-gear.text-white
+          = button_tag type: "button", class: "btn btn-link rounded-circle text-secondary tweet-option-icon text-decoration-none no-link dm-icon"
+            i.bi.bi-envelope-plus.text-white
+
+    div.row.gx-0
+      div data-controller="message-room" data-message-layout-current-user-id-value=current_user.id
+        = turbo_frame_tag "message-rooms-page-#{@message_rooms.current_page}" do
+          - @message_rooms.each do |message_room|
+            = render partial: "message_rooms/message_room", locals: { user: @user, message_room: message_room }
+          = turbo_frame_tag "message-rooms-page-#{@message_rooms.next_page}", loading: :lazy, src: path_to_next_page(@message_rooms)
+
+div.col-5.bg-black.text-white.position-relative.top-header-bottom.scroll-block
+  = turbo_frame_tag 'sub_content' do
+    div.d-flex.flex-column.h-vh-remain
+      .h-header.position-fixed.top-0.z-5.w-center-content-message.d-flex.align-items-center.justify-content-between.w-fit-content
+        div.d-flex.ms-3
+          - @message_room.other_users(@user).each do |other_user|
+            = image_tag other_user.profile.avatar.variant(resize: '35x35!', gravity: :center), alt: other_user.profile.avatar.filename.to_s, class: 'rounded-circle' if other_user.profile.avatar.attached?
+            div.fs-4.ms-2 = other_user.profile.name
+      div.scrollable-message#scrollable-message
+        div data-controller="message-layout" data-message-layout-current-user-id-value=current_user.id
+          = turbo_frame_tag 'messages' do
+            = turbo_frame_tag "messages-page-#{@messages.current_page}" do
+              - @messages.each do |message|
+                = render partial: "messages/message", locals: { message: message }
+              = turbo_frame_tag "messages-page-#{@messages.next_page}", loading: :lazy, src: path_to_next_page(@messages)
+      div.border-top.border-dark.w-100.h-fit-content
+        = render partial: "messages/new_message", locals: { message_room: @message_room }

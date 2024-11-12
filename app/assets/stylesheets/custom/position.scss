@@ -27,3 +27,9 @@
   top: 3%;
   left: 92%;
 }
+
+.position-absolute-bottom {
+  position: fixed;
+  bottom: 0;
+  z-index: 1030;
+}

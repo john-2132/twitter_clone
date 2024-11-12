@@ -23,7 +23,7 @@ class MessageRoomsController < ApplicationController
                                .having('ARRAY_AGG(room_participants.user_id ORDER BY room_participants.user_id) = ARRAY[?]::bigint[]', user_ids) # rubocop:disable Layout/LineLength
                                .first
 
-    unless @message_room
+    if @message_room.nil?
       ActiveRecord::Base.transaction do
         @message_room = MessageRoom.create!
         user_ids.each do |user_id|

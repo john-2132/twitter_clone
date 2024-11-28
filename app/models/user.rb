@@ -30,6 +30,11 @@ class User < ApplicationRecord
 
   has_many :messages, dependent: :destroy
 
+  has_many :sent_notifications, class_name: 'Notification', foreign_key: 'from_user_id', inverse_of: :notifier,
+                                dependent: :destroy
+  has_many :received_notifications, class_name: 'Notification', foreign_key: 'to_user_id', inverse_of: :recipient,
+                                    dependent: :destroy
+
   def replies_and_retweets
     reply_ids = tweets.select(:parent_id).where.not(parent_id: nil).pluck(:parent_id)
     retweet_ids = retweets.pluck(:tweet_id)

@@ -50,7 +50,11 @@ class TweetsController < ApplicationController
     is_saved = @reply_tweet.save
     @reply_tweets = Tweet.reply_tweets(@tweet, 'DESC').page(params[:page])
 
-    render :show, status: :unprocessable_entity unless is_saved
+    if is_saved
+      @reply_tweet.notifications.create_reply_notification!(@user.id, @reply_tweet.parent_id, @reply_tweet.id)
+    else
+      render :show, status: :unprocessable_entity
+    end
   end
 
   private

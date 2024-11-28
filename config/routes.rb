@@ -30,4 +30,6 @@ Rails.application.routes.draw do
     get 'reply_and_retweet', on: :collection, to: 'profiles#reply_and_retweet'
     get 'favorite', on: :collection, to: 'profiles#favorite'
   end
+
+  resources :notifications, only: %i[index]
 end

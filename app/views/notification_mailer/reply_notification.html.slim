@@ -1,0 +1,16 @@
+h2 
+  = "#{@notification.notifier.profile.name}さんから返信がありました。"
+
+h4 
+  = "返信されたツイート"
+p style="margin-left: 2rem"
+  = @notification.tweet.text
+
+h4 
+  = "返信内容"
+p style="margin-left: 2rem"
+  = @notification.reply.text
+
+
+span 
+  = "アプリにアクセスして確認してください。"

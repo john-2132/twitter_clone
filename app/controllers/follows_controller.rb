@@ -11,6 +11,7 @@ class FollowsController < ApplicationController
       @tweets = Tweet.preload(user: { profile: :avatar_attachment }, image_attachment: :blob)
                      .where(user_id: params[:tweet_id])
                      .order(created_at: 'DESC')
+      @user.sent_notifications.create_follow_notification!(follow.follower_id, follow.followed_id)
       respond_to do |format|
         format.turbo_stream { render 'follows/follow' }
       end

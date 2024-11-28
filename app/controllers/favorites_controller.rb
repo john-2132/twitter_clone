@@ -10,6 +10,7 @@ class FavoritesController < ApplicationController
     if favorite.save
       @tweet = Tweet.preload(user: { profile: :avatar_attachment },
                              image_attachment: :blob).find(params[:tweet_id])
+      @tweet.notifications.create_favorite_notification!(@user.id, @tweet.user.id, favorite.tweet_id)
       respond_to do |format|
         format.turbo_stream { render 'favorites/favorite' }
       end

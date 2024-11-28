@@ -1,0 +1,11 @@
+= link_to '#', class: 'text-decoration-none text-white', data: { turbo_frame: "main_content", turbo_action: :advance }
+  div.row.row-cols-2.gx-0.border-bottom.border-dark.pb-2
+    div.col-15.mt-25.text-center
+      i.bi.bi-person-fill.followed.fs-3
+    div.col-105.mt-3
+      = image_tag notification.notifier.profile.avatar.variant(resize: '35x35!', gravity: :center), alt: notification.notifier.profile.avatar.filename.to_s, class: 'rounded-circle' if notification.notifier.profile.avatar.attached?
+    div.col-15.mt-25.text-center
+    div.col-105.mt-25
+      div
+        span.fw-bold = notification.notifier.profile.name
+        = "さんにフォローされました"

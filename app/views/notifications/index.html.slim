@@ -1,0 +1,24 @@
+div.col-45.bg-black.border.border-dark.text-white.border-top-0.ms-col-35.position-relative.top-header-bottom
+  = turbo_frame_tag "main_content" do
+    .h-header.position-fixed.top-0.z-5.w-center-content.d-flex.align-items-center
+      div.d-flex.flex-column.ms-2
+        div.fs-4 = "通知"
+    div.row.gx-0.border-bottom.border-dark
+      = turbo_frame_tag "notifications-page-#{@notifications.current_page}" do
+        - @notifications.each do |notification|
+          - case notification.action
+          - when 'follow' then
+            = render partial: "follow_notification", locals: { notification: notification }
+          - when 'favorite' then
+            = render partial: "favorite_notification", locals: { notification: notification }
+          - when 'retweet' then
+            = render partial: "retweet_notification", locals: { notification: notification }
+          - when 'reply' then
+            - user = notification.recipient
+            - tweet = notification.reply
+            = render partial: "reply_notification", locals: { user: user, tweet: tweet }
+        = turbo_frame_tag "notifications-page-#{@notifications.next_page}", loading: :lazy, src: path_to_next_page(@notifications)
+div.col-4.bg-black.text-white.position-relative.top-header-bottom
+  = turbo_frame_tag 'sub_content' do
+    プロモーション
+    = render partial: "layouts/flash"

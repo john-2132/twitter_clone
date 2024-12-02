@@ -26,22 +26,10 @@ class Notification < ApplicationRecord
   belongs_to :recipient, class_name: 'User', foreign_key: 'to_user_id', inverse_of: :received_notifications
 
   def self.create_notification!(from_user_id, to_user_id, action, tweet_id = nil, reply_id = nil)
-    notification = case action
-                   when NOTIFICATION_ACTIONS[:reply]
-                     new(
-                       from_user_id:,
-                       to_user_id:,
-                       tweet_id:,
-                       reply_id:,
-                       action: NOTIFICATION_ACTIONS[:reply]
-                     )
-                   else
-                     Notification.find_or_initialize_by(from_user_id:, to_user_id:,
-                                                        action:, tweet_id:, reply_id:)
+    notification = Notification.unscoped.find_or_initialize_by(from_user_id:, to_user_id:,
+                                                               action:, tweet_id:, reply_id:)
 
-                   end
-
-    return unless notification.new_record?
+    return if notification.persisted?
 
     notification.checked = true if notification.from_user_id == notification.to_user_id
     return unless notification.valid?

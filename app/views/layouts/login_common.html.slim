@@ -32,9 +32,12 @@ html.h-100
               i.bi.bi-hash
                 span.ms-3.fst-normal 話題を検索
           div.mb-4.h4
-            = link_to '#', class: 'text-decoration-none mb-2 text-white'
-              i.bi.bi-bell
-                span.ms-3.fst-normal 通知
+            = link_to notifications_path, class: "text-decoration-none mb-2 text-white #{'selected-sidemenu' if current_page?(notifications_path)}"
+              i.bi.bi-bell.position-relative
+                - if unchecked_notifications.any?
+                  span.position-absolute.top-0.start-100.translate-middle.badge.rounded-pill.notificated
+                    span.fw-light = unchecked_notifications.count
+              span.ms-3.fst-normal 通知
           div.mb-4.h4
             = link_to message_rooms_path, class: "text-decoration-none mb-2 text-white #{'selected-sidemenu' if request.path.include?('message_room')}"
               i.bi.bi-envelope

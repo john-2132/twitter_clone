@@ -3,7 +3,6 @@
   --bs-btn-hover-bg: #1d9cf0d3;
 }
 
-
 .btn-next-disable,
 .btn-next-disable:hover {
   background-color: #777A7A;
@@ -61,6 +60,11 @@
   color: rgb(0,186,124) !important;
 }
 
-.bookmarked {
+.bookmarked,
+.followed {
   color: rgb(28, 155, 239) !important;
+}
+
+.notificated {
+  background-color: rgb(28, 155, 239) !important;
 }

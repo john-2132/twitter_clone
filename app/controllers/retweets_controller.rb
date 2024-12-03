@@ -9,6 +9,8 @@ class RetweetsController < ApplicationController
 
     if retweet.save
       @tweet = Tweet.preload(user: { profile: :avatar_attachment }, image_attachment: :blob).find(params[:tweet_id])
+      @tweet.notifications.create_notification!(@user.id, @tweet.user.id,
+                                                Notification::NOTIFICATION_ACTIONS[:retweet], retweet.tweet_id)
       respond_to do |format|
         format.turbo_stream { render 'retweets/retweet' }
       end

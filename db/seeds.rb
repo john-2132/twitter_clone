@@ -73,9 +73,21 @@ Follow.create(
   followed_id: coron.id
 )
 
+Notification.create(
+  from_user_id: admin.id,
+  to_user_id: coron.id,
+  action: Notification::NOTIFICATION_ACTIONS[:follow]
+)
+
 Follow.create(
   follower_id: admin.id,
   followed_id: mii.id
+)
+
+Notification.create(
+  from_user_id: admin.id,
+  to_user_id: mii.id,
+  action: Notification::NOTIFICATION_ACTIONS[:follow]
 )
 
 Follow.create(
@@ -83,14 +95,32 @@ Follow.create(
   followed_id: admin.id
 )
 
+Notification.create(
+  from_user_id: coron.id,
+  to_user_id: admin.id,
+  action: Notification::NOTIFICATION_ACTIONS[:follow]
+)
+
 Follow.create(
   follower_id: coron.id,
   followed_id: mii.id
 )
 
+Notification.create(
+  from_user_id: coron.id,
+  to_user_id: mii.id,
+  action: Notification::NOTIFICATION_ACTIONS[:follow]
+)
+
 Follow.create(
   follower_id: mii.id,
   followed_id: coron.id
+)
+
+Notification.create(
+  from_user_id: mii.id,
+  to_user_id: coron.id,
+  action: Notification::NOTIFICATION_ACTIONS[:follow]
 )
 
 admin_first_tweet = Tweet.create(
@@ -123,10 +153,25 @@ Favorite.create(
   user_id: admin.id
 )
 
-Tweet.create(
+Notification.create(
+  from_user_id: admin.id,
+  to_user_id: mii.id,
+  action: Notification::NOTIFICATION_ACTIONS[:favorite],
+  tweet_id: mii_request_tweet.id
+)
+
+admin_allow_to_mii = Tweet.create(
   text: 'かしこまり',
   parent_id: mii_request_tweet.id,
   user_id: admin.id
+)
+
+Notification.create(
+  from_user_id: admin.id,
+  to_user_id: coron.id,
+  action: Notification::NOTIFICATION_ACTIONS[:reply],
+  tweet_id: mii_request_tweet.id,
+  reply_id: admin_allow_to_mii.id
 )
 
 coron_request_tweet = Tweet.create(
@@ -140,15 +185,38 @@ admin_reply_tweet_to_coron = Tweet.create(
   user_id: admin.id
 )
 
-Tweet.create(
+Notification.create(
+  from_user_id: admin.id,
+  to_user_id: coron.id,
+  action: Notification::NOTIFICATION_ACTIONS[:reply],
+  tweet_id: coron_request_tweet.id,
+  reply_id: admin_reply_tweet_to_coron.id
+)
+
+coron_matsusaka_reply_to_admin = Tweet.create(
   text: '松坂牛でよろ',
   parent_id: admin_reply_tweet_to_coron.id,
   user_id: coron.id
 )
 
+Notification.create(
+  from_user_id: coron.id,
+  to_user_id: admin.id,
+  action: Notification::NOTIFICATION_ACTIONS[:reply],
+  tweet_id: admin_reply_tweet_to_coron.id,
+  reply_id: coron_matsusaka_reply_to_admin.id
+)
+
 Favorite.create(
   tweet_id: coron_request_tweet.id,
   user_id: admin.id
+)
+
+Notification.create(
+  from_user_id: admin.id,
+  to_user_id: coron.id,
+  action: Notification::NOTIFICATION_ACTIONS[:favorite],
+  tweet_id: coron_request_tweet.id
 )
 
 Tweet.create(
@@ -166,6 +234,13 @@ Retweet.create(
   user_id: admin.id
 )
 
+Notification.create(
+  from_user_id: admin.id,
+  to_user_id: mii.id,
+  action: Notification::NOTIFICATION_ACTIONS[:retweet],
+  tweet_id: mii_dont_touch_tweet.id
+)
+
 mii_bite_tweet = Tweet.create(
   text: '今日は噛みつきたい気分',
   user_id: mii.id
@@ -174,6 +249,13 @@ mii_bite_tweet = Tweet.create(
 Retweet.create(
   tweet_id: mii_bite_tweet.id,
   user_id: admin.id
+)
+
+Notification.create(
+  from_user_id: admin.id,
+  to_user_id: mii.id,
+  action: Notification::NOTIFICATION_ACTIONS[:retweet],
+  tweet_id: mii_bite_tweet.id
 )
 
 Tweet.create(
@@ -196,6 +278,13 @@ Retweet.create(
   user_id: mii.id
 )
 
+Notification.create(
+  from_user_id: mii.id,
+  to_user_id: coron.id,
+  action: Notification::NOTIFICATION_ACTIONS[:retweet],
+  tweet_id: coron_snack_tweet.id
+)
+
 Tweet.create(
   text: 'ふっ、コロンはちょろいな。ういやつめ',
   user_id: admin.id
@@ -214,6 +303,13 @@ mii_feign_ignorance_tweet = Tweet.create(
 Retweet.create(
   tweet_id: mii_feign_ignorance_tweet.id,
   user_id: coron.id
+)
+
+Notification.create(
+  from_user_id: coron.id,
+  to_user_id: mii.id,
+  action: Notification::NOTIFICATION_ACTIONS[:retweet],
+  tweet_id: mii_feign_ignorance_tweet.id
 )
 
 Tweet.create(

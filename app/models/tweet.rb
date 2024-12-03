@@ -13,6 +13,8 @@ class Tweet < ApplicationRecord
   belongs_to :parent_tweet, class_name: 'Tweet', optional: true, foreign_key: 'parent_id', inverse_of: :replies
   has_many :replies, class_name: 'Tweet', foreign_key: 'parent_id', inverse_of: :parent_tweet, dependent: :destroy
 
+  has_many :notifications, dependent: :destroy
+
   def favorited?
     favorites.exists?
   end

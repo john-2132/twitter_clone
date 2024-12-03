@@ -1,0 +1,10 @@
+h2 
+  = "#{@notification.notifier.profile.name}さんからいいねされました。"
+
+h4 
+  = "いいねされたツイート"
+p style="margin-left: 2rem"
+  = @notification.tweet.text
+
+span 
+  = "アプリにアクセスして確認してください。"

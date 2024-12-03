@@ -1,0 +1,31 @@
+= link_to tweet_path(tweet), class: 'text-decoration-none text-white', data: { turbo_frame: "main_content", turbo_action: :advance }
+  div.row.gx-0.border-bottom.border-dark
+    div.col-15.mt-25.text-center
+      = image_tag tweet.user.profile.avatar.variant(resize: '45x45!', gravity: :center), alt: tweet.user.profile.avatar.filename.to_s, class: 'rounded-circle' if tweet.user.profile.avatar.attached?
+    div.col-105.mt-25
+      span= tweet.user.profile.name
+      span.text-secondary.ms-2= time_ago_in_words(tweet.created_at)
+      div.float-end.me-2
+        .btn-group
+          = button_tag type: "button", class: "btn btn-link btn-sm rounded-circle text-secondary tweet-option-icon text-decoration-none no-link dropdown-toggle", "data-bs-toggle" => "dropdown", "data-bs-auto-close" => "true", "aria-expanded" => "false"
+            i.bi.bi-three-dots
+          ul.dropdown-menu.dropdown-menu-black.dropdown-menu-end.w-inherit.border-dark.shadow-lg.drop-down-layer
+            li
+              - if tweet.own?(user.id)
+                = button_to '#', method: :post, data: { turbo_method: 'post' }, class: 'dropdown-item no-link'
+                  i.bi.bi-trash.fst-normal.text-danger = " 削除"
+              - else
+                = render partial: "tweets/user_follow", locals: { user: user, tweet: tweet }
+                = button_to message_rooms_path, method: :post, params: { to_user_ids: [tweet.user.id] }, class: 'dropdown-item no-link'
+                  i.bi.bi-envelope-plus.fst-normal = " #{tweet.user.profile.name}さんにメッセージを送る"
+      br
+      span.text-secondary= "返信先: "
+      span.text-twitter= user.profile.name
+      span.text-secondary= "さん"
+      br
+      span.text-wrap
+        = tweet.text
+      div.me-2
+        = image_tag tweet.image, class: 'rounded-4 w-100 my-2' if tweet.image.attached?
+      = turbo_frame_tag "tweet_icons_#{tweet.id}" do
+        = render partial: "tweets/tweet_icons", locals: { user: user, tweet: tweet }

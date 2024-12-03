@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_10_15_143749) do
+ActiveRecord::Schema[7.0].define(version: 2024_11_14_131619) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -86,6 +86,21 @@ ActiveRecord::Schema[7.0].define(version: 2024_10_15_143749) do
     t.index ["message_room_id"], name: "index_messages_on_message_room_id"
     t.index ["user_id"], name: "index_messages_on_user_id"
     t.check_constraint "(char_length(regexp_replace(text, '[\\u0000-\\u007F]'::text, ''::text, 'g'::text)) * 2 + char_length(regexp_replace(text, '[^\\u0000-\\u007F]'::text, ''::text, 'g'::text))) <= 10000", name: "text_length_check"
+  end
+
+  create_table "notifications", force: :cascade do |t|
+    t.bigint "from_user_id", null: false
+    t.bigint "to_user_id", null: false
+    t.integer "action", null: false
+    t.boolean "checked", default: false, null: false
+    t.bigint "tweet_id"
+    t.bigint "reply_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["from_user_id"], name: "index_notifications_on_from_user_id"
+    t.index ["reply_id"], name: "index_notifications_on_reply_id"
+    t.index ["to_user_id"], name: "index_notifications_on_to_user_id"
+    t.index ["tweet_id"], name: "index_notifications_on_tweet_id"
   end
 
   create_table "profiles", force: :cascade do |t|
@@ -178,6 +193,10 @@ ActiveRecord::Schema[7.0].define(version: 2024_10_15_143749) do
   add_foreign_key "follows", "users", column: "follower_id", name: "follower_id"
   add_foreign_key "messages", "message_rooms"
   add_foreign_key "messages", "users"
+  add_foreign_key "notifications", "tweets", column: "reply_id", name: "reply_id"
+  add_foreign_key "notifications", "tweets", name: "tweet_id"
+  add_foreign_key "notifications", "users", column: "from_user_id", name: "from_user_id"
+  add_foreign_key "notifications", "users", column: "to_user_id", name: "to_user_id"
   add_foreign_key "profiles", "users"
   add_foreign_key "retweets", "tweets"
   add_foreign_key "retweets", "users"

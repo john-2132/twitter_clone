@@ -18,6 +18,17 @@ services:
       - "3000:3000"
     depends_on:
       - db
+    environment:
+      WEBPACKER_DEV_SERVER_HOST: webpacker
+      SELENIUM_DRIVER_URL: http://chrome:4444/wd/hub
+  chrome:
+    image: seleniarm/standalone-chromium:latest
+    shm_size: '2gb'
+    ports:
+      - "4444:4444"
+      - "7900:7900"
+    logging:
+      driver: none
   js:
     image: rails_template:latest
     command: yarn build --watch

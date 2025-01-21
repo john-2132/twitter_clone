@@ -135,14 +135,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_11_14_131619) do
     t.index ["user_id"], name: "index_room_participants_on_user_id"
   end
 
-  create_table "tasks", force: :cascade do |t|
-    t.string "title"
-    t.text "description"
-    t.integer "status"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "tweets", force: :cascade do |t|
     t.string "text", null: false
     t.bigint "user_id", null: false

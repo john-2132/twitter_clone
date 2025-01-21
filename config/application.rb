@@ -23,11 +23,11 @@ module Myapp
     # config.eager_load_paths << Rails.root.join("extras")
     config.generators do |g|
       g.test_framework :rspec,
-                       fixtures: false,
                        view_specs: false,
                        helper_specs: false,
                        routing_specs: false
       g.factory_bot false
+      g.fixture_replacement :factory_bot, dir: 'spec/factories'
     end
     config.action_view.default_form_builder = 'ApplicationFormBuilder'
     config.active_storage.variant_processor = :mini_magick

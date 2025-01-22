@@ -6,7 +6,7 @@
       = form_with model: Tweet.new, url: tweets_path, id: 'tweetPost', local: true do |f|
         div.row.gx-0
           .flex_text_area.mt-3
-            div.form-control.flex_text_area_dummy.border-0.rounded-0.fs-5.ps-0 aria-hidden='true'
+            div.form-control.flex_text_area_dummy.border-0.rounded-0.fs-5.ps-0 id='tweet_text_entity' aria-hidden='true'
               = "&ZeroWidthSpace;"
             = f.text_area :text, class: 'form-control bg-black text-white border-0 rounded-0 fs-5 ps-0 flex_text_area_input_area text_area_without_focus_outline', placeholder: 'いまどうしてる？'
         #tweetImageFrame.div.row.gx-0.me-2.position-relative
@@ -15,4 +15,4 @@
             = f.file_field :image, accept: "image/jpg", class: "d-none", for: "tweetPost"
             = f.label :image, class: "tweet-image-label"
               i.bi.bi-image.text-primary
-            button.btn.btn-tweet.rounded-5.w-25.mx-2.my-2 type='submit' form='tweetPost' ポストする
+            button.btn.btn-tweet.rounded-5.w-25.mx-2.my-2 type='submit' form='tweetPost' id='tweetPostBtn' ポストする
